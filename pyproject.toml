@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["setuptools>=67.0", "wheel"]
+build-backend = "setuptools.build_meta:__legacy__"
 
 [project]
 name = "artus"
@@ -17,12 +17,13 @@ classifiers = [
 ]
 dependencies = [
     "chardet==5.1.0", 
-    "detectron2 @ git+https://github.com/facebookresearch/detectron2.git@072713649a9b0069c10aad1aaab819112e8f1e2e",
     "fiftyone==0.19.1",
+    "torch==1.12.1",
+    "torchmetrics==0.9.3",
+    "torchvision==0.13.1",
     "fiftyone-brain==0.10.0",
     "fiftyone-db==0.4.0",
     "Fiona==1.8.22",
-    "GDAL==3.5.3",
     "importlib-metadata==6.1.0",
     "importlib-resources==5.7.1",
     "iopath==0.1.9",
@@ -49,7 +50,7 @@ dependencies = [
     "notebook==6.4.11",
     "numpy>=1.18.1",
     "omegaconf==2.3.0",
-    "opencv-python==4.6.0",
+    "opencv-python>4.6.0",
     "pandas>=1.5.2",
     "Pillow==9.2.0",
     "plotly==5.13.0",
@@ -68,9 +69,6 @@ dependencies = [
     "tensorboard-data-server==0.7.0",
     "tensorboard-plugin-wit==1.8.1",
     "tensorboardX==2.5.1",
-    "torch==1.12.1",
-    "torchmetrics==0.9.3",
-    "torchvision==0.13.1",
     "tqdm==4.65.0",
     "voxel51-eta==0.8.4"
 ]
