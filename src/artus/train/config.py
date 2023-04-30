@@ -3,15 +3,25 @@ import yaml
 import os
 
 
+def read_config(config_path):
+    with open(config_path) as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
+    return config
+	
+def check_logs(config_path):
+    config = read_config(config_path)
+    if config['LOGS']['CHECKPOINT']:
+        return True
+    else:
+    	print('No checkpoint path mentionned in the config file.')
+    	return False
 
 def add_config(cfg, config_path, device, train_dataset, test_dataset, output_dir=None, mode=['train', 'inference']):
     """
     Add config for DL model coming from a yaml config file.
     """
-    
-    with open(config_path) as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
-
+    config = read_config(config_path)
+        
     cfg.merge_from_file(model_zoo.get_config_file(config['MODEL']['URL']))
 
     if mode == 'train':
@@ -37,3 +47,5 @@ def add_config(cfg, config_path, device, train_dataset, test_dataset, output_dir
     cfg.INPUT.MIN_SIZE_TEST = config['INPUT']['MIN_SIZE_TEST']
     cfg.INPUT.MAX_SIZE_TEST = config['INPUT']['MAX_SIZE_TEST']
     return cfg
+    
+ 

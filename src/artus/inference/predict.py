@@ -196,5 +196,9 @@ def apply_nms(outputs, nms_treshold, type_of_preds=['segm', 'bbox']) :
     if type_of_preds == 'segm':
         res.pred_masks = pred_masks[keep_idx]
     res = {"instances": res}
+
+def export_spatial(raster_path, config_path):
     
+    
+
 

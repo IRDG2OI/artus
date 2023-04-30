@@ -17,12 +17,12 @@ classifiers = [
 ]
 dependencies = [
     "chardet==5.1.0", 
-    "fiftyone==0.19.1",
+    "fiftyone>=0.19.1",
     "torch>=1.12.1",
     "torchmetrics>=0.9.3",
     "torchvision>=0.13.1",
-    "fiftyone-brain==0.10.0",
-    "fiftyone-db==0.4.0",
+    "fiftyone-brain>=0.10.0",
+    "fiftyone-db>=0.4.0",
     "Fiona==1.8.22",
     "importlib-metadata==6.1.0",
     "importlib-resources==5.7.1",

@@ -22,7 +22,6 @@ def create_or_load_dataset(dataset_name, dataset_type=['unlabeled', 'coco'], ima
     - a fiftyone dataset with at least 5 fields : id, coco_id, filepath, ground_truth annotations, tags and basic metadata.
     '''
     
-    
     if dataset_name not in fo.list_datasets():
         if dataset_type == 'coco':
     # Create a 51 dataset with coco annotations
