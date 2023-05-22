@@ -8,7 +8,26 @@ import yaml
 from datetime import datetime
 
 from build_trainer import MyTrainer
-from config import add_config
+from config import add_config, read_config
+
+
+def add_logs_path_to_config(config_path, checkpoint_path_dict):
+    '''
+    Add logs paths to the config file to keep track of trained models.
+    # Inputs :
+    - config_path : the path to a config file (yaml)
+    - checkpoint_path_dict : a dict including the 'CHECKPOINT' (the path to the checkpoint saved)
+    # Outputs : 
+    - the same config file with the path to the final checkpoint added.
+    '''
+    with open(config_path,'r') as config:
+        config = yaml.safe_load(config) 
+        config['LOGS'].update(checkpoint_path_dict)
+
+    if config:
+        with open(config_path,'w') as yamlfile:
+            yaml.safe_dump(config, yamlfile) 
+
 
 
 def train_model(config_path):
@@ -24,8 +43,7 @@ def train_model(config_path):
     device = ("cuda" if torch.cuda.is_available() else "cpu")
 
     #read config file for training
-    with open(config_path) as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
+    config = read_config(config_path)
 
     #Set automatically the name of the current train session
     today = datetime.today().strftime('%Y%m%d_%H:%M:%S')
@@ -53,4 +71,12 @@ def train_model(config_path):
     trainer = MyTrainer(cfg)
     trainer.resume_or_load(resume=False)
     trainer.train()
+
+    #Append logs information in the config file to keep track of trained model path
+    checkpoint_path = os.path.join(config['LOGS']['LOGS_DIR'], session_name, 'model_final.pth')
+    dict = {'CHECKPOINT' : checkpoint_path}
+    add_logs_path_to_config(config_path, dict)
+
+
+
 

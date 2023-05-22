@@ -4,17 +4,31 @@ import os
 
 
 def read_config(config_path):
+    '''
+    Read a yaml file used to config a model for training or inference.
+    # Input :
+    - config_path : the path to a config file in yaml format
+    # Output : 
+    - a python object 
+    '''
     with open(config_path) as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     return config
 	
 def check_logs(config_path):
+    '''
+    Check if the config file already contains path to a log directory (which include a checkpoint to a model)
+    # Input :
+    - config_path : the path to a config file in yaml format
+    # Output : 
+    - Returns true if the config file includes path to a log directory, false otherwise.
+    '''
     config = read_config(config_path)
     if config['LOGS']['CHECKPOINT']:
-        return True
+        check_logs = True
     else:
-    	print('No checkpoint path mentionned in the config file.')
-    	return False
+        check_logs = False
+    return check_logs
 
 def add_config(cfg, config_path, device, train_dataset, test_dataset, output_dir=None, mode=['train', 'inference']):
     """
