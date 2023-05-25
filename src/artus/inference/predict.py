@@ -1,6 +1,4 @@
-from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor
-from detectron2 import model_zoo
 from detectron2.structures import Boxes, Instances
 from torchvision.transforms import functional as func
 import numpy as np
@@ -8,44 +6,34 @@ import cv2
 from PIL import Image
 import fiftyone as fo
 import fiftyone.utils.labels as foul
-import yaml
+from fiftyone import ViewField as F
 import os
-os.environ["OPENCV_IO_MAX_IMAGE_PIXELS"]=pow(2,50).__str__()
 import cv2
 from torchvision.ops import nms
 import fiftyone as fo
-
+from artus.inference.config import add_config
 from joblib import Parallel, delayed
 import multiprocessing
 multiprocessing.set_start_method('spawn')
+os.environ["OPENCV_IO_MAX_IMAGE_PIXELS"]=pow(2,50).__str__()
 
-
-def build_predictor(config_name, device):
-    """
-    Add config for DL model coming from a yaml config file.
-    """
-    
-    with open(os.path.join(models_inference_config_dir, config_name)) as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
-
-    cfg = get_cfg()
-    cfg.merge_from_file(model_zoo.get_config_file(config['MODEL']['URL']))
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = config['MODEL']['ROI_HEADS']['NUM_CLASSES']
-    cfg.MODEL.WEIGHTS = config['MODEL']['WEIGHTS']
-    cfg.DATALOADER.NUM_WORKERS = config['DATALOADER']['NUM_WORKERS']
-    cfg.SOLVER.IMS_PER_BATCH = config['SOLVER']['IMS_PER_BATCH']
-    cfg.MODEL.DEVICE = device
-    cfg.INPUT.MIN_SIZE_TEST = config['INPUT']['MIN_SIZE_TEST']
-    cfg.INPUT.MAX_SIZE_TEST = config['INPUT']['MAX_SIZE_TEST']
+def build_predictor(config_path, device):
+    '''
+    Load a model in prediction mode
+    # Input :
+    - config_path : the path to a config file in yaml format
+    - device : 'cpu' or 'cuda'. Results of ("cuda" if torch.cuda.is_available() else "cpu")
+    # Output : 
+    - predictor : the model loaded to predict unlabeled images
+    '''
+    cfg = add_config(config_path, device)
     predictor = DefaultPredictor(cfg)
-
     return predictor
 
 def predict(predictor, filepath):
     image = cv2.imread(filepath)
     outputs = predictor(image)
     return outputs
-
 
 def crop_mask(bbox, mask):
     ''' Input : 
@@ -59,8 +47,51 @@ def crop_mask(bbox, mask):
     x1, y1, x2, y2 = bbox.cpu().detach().numpy().astype(np.int32)
     return mask[y1:y2, x1:x2]
 
+def filter_confidence_labels(dataset, fo_field, confidence_thr=0):
+    '''
+    Filter labels that are smaller than the condidence threshold set.
+
+    # Input:
+    - dataset : a fiftyone dataset
+    - fo_field : a fiftyone field with model's predictions
+    - confidence_thr : a threshold for confidence of model's predictions 
+
+    # Output : 
+    - dataset : the fiftyone dataset with labels smaller than the confidence threshold removed
+    ''' 
+    conf_filter = fo.FilterLabels(fo_field, F("confidence") > confidence_thr)
+    dataset = dataset.add_stage(conf_filter)
+    return dataset
+
+def filter_small_predictions(dataset, fo_field):
+    '''
+    Filter small predictions (2 or 3 square pixels) in a dataset
+
+    # Input:
+    - dataset : a fiftyone dataset
+    - fo_field : a fiftyone field with model's predictions
+
+    # Output : 
+    - dataset : the fiftyone dataset with small predictions area removed
+    ''' 
+    stage = fo.FilterLabels(fo_field, F("points").length() > 0)
+    dataset = dataset.add_stage(stage)
+    return dataset
 
 def predict_on_sample(sample_filepath, device, predictor, nms_threshold, classes, type_of_preds=['segm', 'bbox']):
+    '''Use an AI model to predict segmentations mask or bounding boxes on an image.
+
+    # Inputs:
+    - sample_filepath : the filepath to an image (jpg, png or tif file)
+    - predictor : the result of build_predictor() 
+    - device : whether to load data on cpu or gpu
+    - nms_threshold : the non-maximum-suppression threshold
+    - classes : a list of the classes predicted by the model
+    - type_of_preds : indicate if semgentation masks expeted of bounding boxes
+
+    # Outputs :
+    - a fiftyone field (fo.Detections) containing predictions for the sample
+    '''
     image = Image.open(sample_filepath)
     image = func.to_tensor(image).to(device)
     c, h, w = image.shape
@@ -109,18 +140,19 @@ def predict_on_sample(sample_filepath, device, predictor, nms_threshold, classes
     return fo.Detections(detections=detections)
 
 
-def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_field, tags=None, type_of_preds=['segm', 'bbox'], nms_threshold=1):
+
+def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_field, tags=None, type_of_preds=['segm', 'bbox'], nms_threshold=1, confidence_thr=0):
     '''Add predictions to a fiftyone dataset
 
-    Inputs:
+    # Inputs:
     - dataset : a fiftyone dataset
     - predictor : the result of build_predictor() 
     - device : whether to load data on cpu or gpu
     - classes : a list of the classes predicted by the model
-    - tags : a varaible or a list of varaibles (optional) to filter the samples on which to predict
+    - tags : a variable or a list of varaibles (optional) to filter the samples on which to predict
     - type_of_preds : indicate if semgentation masks expeted of bounding boxes
 
-    Outputs :
+    # Outputs :
     - a dataset containing predictions for test samples
     '''
     num_cores = 0
@@ -139,27 +171,30 @@ def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_
             for sample in pb(test_set.values('filepath')):
                 detections.append(predict_on_sample(sample, device, predictor, nms_threshold, classes, type_of_preds))
 
-    # Save predictions to dataset
     if type_of_preds=='segm':
         test_set.set_values("predictions_with_bbox", detections)
+        
         #Transform bbox and mask in polylines
-
         foul.instances_to_polylines(
             test_set,
             in_field='predictions_with_bbox',
             out_field=predictions_field
             )
         
-        dataset.delete_sample_field('predictions_with_bbox')
+        test_set.delete_sample_field('predictions_with_bbox')
 
     else: 
         test_set.set_values(predictions_field, detections)
-        test_set.save()
 
-    dataset.save()
-    print(dataset)
+    test_set = filter_small_predictions(test_set, predictions_field)
+    
+    if confidence_thr>0:
+        test_set = filter_confidence_labels(test_set, predictions_field, confidence_thr)
 
-    return dataset
+    test_set.save()
+    print(test_set)
+
+    return test_set
 
 def apply_nms(outputs, nms_treshold, type_of_preds=['segm', 'bbox']) :
     ''' 
@@ -197,8 +232,6 @@ def apply_nms(outputs, nms_treshold, type_of_preds=['segm', 'bbox']) :
         res.pred_masks = pred_masks[keep_idx]
     res = {"instances": res}
 
-def export_spatial(raster_path, config_path):
+#def export_spatial(raster_path, config_path):
     
     
-
-
