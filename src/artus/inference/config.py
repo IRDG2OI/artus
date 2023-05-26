@@ -37,7 +37,7 @@ def add_config(config_path, device):
         cfg = get_cfg()
         cfg.merge_from_file(model_zoo.get_config_file(config['MODEL']['URL']))
         cfg.MODEL.ROI_HEADS.NUM_CLASSES = config['MODEL']['ROI_HEADS']['NUM_CLASSES']
-        cfg.MODEL.WEIGHTS = config['MODEL']['WEIGHTS']
+        cfg.MODEL.WEIGHTS = config['LOGS']['CHECKPOINT']
         cfg.DATALOADER.NUM_WORKERS = config['DATALOADER']['NUM_WORKERS']
         cfg.SOLVER.IMS_PER_BATCH = config['SOLVER']['IMS_PER_BATCH']
         cfg.MODEL.DEVICE = device
@@ -45,8 +45,3 @@ def add_config(config_path, device):
         cfg.INPUT.MAX_SIZE_TEST = config['INPUT']['MAX_SIZE_TEST']
     return cfg
 
-
-def build_predictor(config_path, device):
-    cfg = add_config(config_path, device)
-    predictor = DefaultPredictor(cfg)
-    return predictor
