@@ -54,18 +54,18 @@ class GeoCOCOExporter():
 
         return gdf
     
-    def get_transform(self, sample_path):
+    def get_transform(self, sample):
         ''' Get affine transformation for a tif sample
         #Input :
-        sample_path: the path of the sample with the extension (.tif)
+        sample: the path or name of the sample with the extension (.tif)
 
         #Output:
         the affine.Affine shapely object with the 6 elements required for an affine trasnformation
         '''
         if self.sample_dir:
-            sample = rasterio.open(os.path.join(self.sample_dir, sample_name))
+            sample = rasterio.open(os.path.join(self.sample_dir, sample))
         else:
-            sample = rasterio.open(sample_path)
+            sample = rasterio.open(sample)
         return sample.transform
         
     def affine_transform(self, gdf):
