@@ -6,18 +6,20 @@ import os
 from artus.spatialize.GeoCOCOExporter import GeoCOCOExporter
 
 class FiftyoneGeoExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter): 
-    """Export a fiftyone dataset to a geospatial format.
+    """Export a fiftyone dataset to a geospatial format (geojson).
 
      Datasets of this type are exported in the following format:
 
-         <dataset_dir>/
-             models_predictions.geojson
+         <export_dir>/
+             dest_name.geojson
 
-     where ``models_predictions.geojson`` is a GeoJson file.
+     where ``dest_name.geojson`` is a GeoJson file containing labels.
     
      Args:
          export_dir: the directory to write the export
-         label_type : the label_type you want to export ('polylines' for segmentation annotations or 'classifications' for multi/mono label annotations)
+         label_type : the label_type of the concerned fiftyone field ('polylines' for segmentation annotations or 'detections' for bbox annotations)
+         epsg_code : the epsg code (for example : '4326' for world coordinates) in which the results will be exported
+         dest_name : the file name of the geojson file with the extension (for example : 'spatial_predictions.geojson')
     """
 
     def __init__(self, export_dir, label_type, epsg_code, dest_name):
@@ -86,7 +88,6 @@ class FiftyoneGeoExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
             polygon = label.to_shapely(frame_size=(imw,imh))
         elif self.label_type=='polylines':
             polygon = label.to_shapely(frame_size=(imw,imh))
-        print(polygon.is_valid)
         return polygon
 
     def export_sample(self, image_or_path, label, metadata=None):
@@ -104,7 +105,6 @@ class FiftyoneGeoExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
 
         sample = self.sample_collection[image_or_path]
         metadata = sample.metadata
-        self.gdf_rows = []
 
         # Get field values
         for n_label in getattr(label, self.label_type):
@@ -115,9 +115,7 @@ class FiftyoneGeoExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
             geometry = self.shapely_polygons(n_label, metadata)                
 
             gdf_row = (img_filename , label , confidence, geometry)
-            #self.gdf_rows.append(gdf_row)
 
-        # _labels contains all the rows to export in the geojson
             self._labels.append(gdf_row)
         
         
@@ -138,6 +136,7 @@ class FiftyoneGeoExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
         #convert _labels into gdf
         df = pd.DataFrame(data=self._labels, columns=self.columns_names)
         gdf = geopandas.GeoDataFrame(df, geometry='geometry')
+
         #convert pixel-values coordinates into geospatial coordinates
         gdf['transform'] =  [self.get_transform(sample) for sample in gdf['img_filename']]
         affine_transformed_gdf = self.affine_transform(gdf)
