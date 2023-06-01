@@ -1,9 +1,6 @@
 from pylabel import importer
 import numpy as np
-import pandas as pd
 from shapely.geometry import Polygon
-import fiftyone as fo
-import fiftyone.utils.data as foud
 import solaris.vector.polygon as solpol
 import geopandas
 import rasterio
@@ -15,7 +12,7 @@ class GeoCOCOExporter():
     Class to convert a coco.json file into a geojson format
     ## Inputs:
     coco_path : the relative or absolute path top a coco.json file
-    sample_dir : the paht to the directory where the tif files are located
+    sample_dir : the paht to the directory where the tif files are located (if sample_name is already the full path of the sample, no need to provide sample_dir)
     epsg_code : the epsg_code (like EPSG:4326') to set the CRS of the geojson file
     dest_path : the destination path where the results will be exported (if directory does not exist, it will be created)
     dest_name : the name of the file to store
@@ -23,12 +20,12 @@ class GeoCOCOExporter():
     ## Output:
     A geojson file containing the masks of the coco file
     '''
-    def __init__(self, coco_path, sample_dir, epsg_code, dest_path, dest_name):
+    def __init__(self, coco_path, epsg_code, dest_path, dest_name, sample_dir=None):
         self.coco_path = coco_path
-        self.sample_dir = sample_dir
         self.epsg_code = epsg_code
         self.dest_path = dest_path
         self.dest_name = dest_name
+        self.sample_dir = sample_dir
 
     def coco2gdf(self):
         ''' Convert a coco fiel into a geopandas dataframe.
@@ -57,17 +54,18 @@ class GeoCOCOExporter():
 
         return gdf
     
-    def get_transform(self, sample_name):
+    def get_transform(self, sample_path):
         ''' Get affine transformation for a tif sample
         #Input :
-        sample_dir : the directory where the sample is located
-        sample_name: the name of the sample with the extension (.tif)
+        sample_path: the path of the sample with the extension (.tif)
 
         #Output:
         the affine.Affine shapely object with the 6 elements required for an affine trasnformation
         '''
-
-        sample = rasterio.open(os.path.join(self.sample_dir, sample_name))
+        if self.sample_dir:
+            sample = rasterio.open(os.path.join(self.sample_dir, sample_name))
+        else:
+            sample = rasterio.open(sample_path)
         return sample.transform
         
     def affine_transform(self, gdf):
@@ -94,7 +92,7 @@ class GeoCOCOExporter():
         a geojson file exported at the dest_path + dest_name.
         '''
         #check if dest_path exists (create it if needed)
-        os.makedirs(self.affine_transformdest_path, exist_ok=True)
+        os.makedirs(self.dest_path, exist_ok=True)
 
         gdf = self.coco2gdf()
         gdf['transform'] =  [self.get_transform(sample) for sample in gdf['img_filename']]
