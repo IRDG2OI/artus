@@ -6,7 +6,7 @@ import yaml
 from rasterio.crs import CRS
 import numpy as np
 
-from crs_settings import check_crs
+from artus.prepare.crs_settings import check_crs
 
 
 def tile_ortho(ortho_path, dest_dir, tuple_tile_size, h_shift=0.0, v_shift=0.0):

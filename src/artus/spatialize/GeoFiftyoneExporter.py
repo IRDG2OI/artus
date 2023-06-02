@@ -5,7 +5,7 @@ import geopandas
 import os
 from artus.spatialize.GeoCOCOExporter import GeoCOCOExporter
 
-class FiftyoneGeoExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter): 
+class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter): 
     """Export a fiftyone dataset to a geospatial format (geojson).
 
      Datasets of this type are exported in the following format:

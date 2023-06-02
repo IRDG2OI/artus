@@ -7,8 +7,8 @@ import torch
 import yaml
 from datetime import datetime
 
-from build_trainer import MyTrainer
-from config import add_config, read_config
+from artus.train.build_trainer import MyTrainer
+from artus.train.config import add_config, read_config
 
 
 def add_logs_path_to_config(config_path, checkpoint_path_dict):

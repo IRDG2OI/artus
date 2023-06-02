@@ -1,5 +1,4 @@
 import solaris.data.coco as solcoco
-import glob
 import os
 
 

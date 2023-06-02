@@ -1,11 +1,7 @@
 import fiftyone as fo
 import fiftyone.utils.coco as fouc
-import fiftyone.utils.data as foud
-from fiftyone import ViewField as F
 import json
 import os
-from datetime import datetime
-
 
 def create_or_load_dataset(dataset_name, dataset_type=['unlabeled', 'coco'], images_path=None, annotations_path=None, df_test=None, label_type=['segmentations', 'detections']):
     ''' If the dataset_name provided is in the local 51 database : the dataset is loaded from the database otherwise,

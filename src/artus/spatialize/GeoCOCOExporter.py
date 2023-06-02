@@ -6,7 +6,6 @@ import geopandas
 import rasterio
 import os
 
-
 class GeoCOCOExporter():
     '''
     Class to convert a coco.json file into a geojson format

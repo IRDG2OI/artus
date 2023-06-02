@@ -1,6 +1,3 @@
-import geopandas
-import yaml
-import rasterio
 from rasterio.crs import CRS
 
 

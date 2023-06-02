@@ -4,7 +4,7 @@ from detectron2.config import get_cfg
 from detectron2.evaluation import COCOEvaluator
 import os
 import torch
-from write_eval_results import ModelsMetricsFormat
+from artus.evaluate_model.write_eval_results import ModelsMetricsFormat
 from artus.train.build_trainer import MyTrainer
 from artus.train.config import read_config, add_config
 
