@@ -104,7 +104,7 @@ class COCOSplitter(COCOStats):
         df_val = dataset.Dataset(df_val)
         df_test = dataset.Dataset(df_test)
         
-        df_train.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_train_name, '.json'))
-        df_val.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_val_name, '.json'))
-        df_test.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_test_name, '.json'))
+        df_train.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_train_name))
+        df_val.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_val_name))
+        df_test.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_test_name))
         
