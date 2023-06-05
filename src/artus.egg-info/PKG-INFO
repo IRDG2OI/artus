@@ -9,3 +9,18 @@ Classifier: Programming Language :: Python :: 3
 Classifier: Operating System :: OS Independent
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
+
+<div align="center">
+
+#<img src="jacques.png" height="150px">
+
+# Artus : predict geospatial occurrences with AI
+
+</div>
+
+Jacques is a python package to detect useless images within a directory using artificial intelligence. The model that detects useless images has been trained on photos acquired with the Seatizen protocol.
+Have a look to the seatizen acquisition protocol here : 
+<div align="center">    
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7129736.svg)](https://doi.org/10.5281/zenodo.7129736)
+

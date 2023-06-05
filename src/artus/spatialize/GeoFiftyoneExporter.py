@@ -15,7 +15,7 @@ class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
 
      where ``dest_name.geojson`` is a GeoJson file containing labels.
     
-     Args:
+    Attributes:
          export_dir: the directory to write the export
          label_type : the label_type of the concerned fiftyone field ('polylines' for segmentation annotations or 'detections' for bbox annotations)
          epsg_code : the epsg code (for example : '4326' for world coordinates) in which the results will be exported

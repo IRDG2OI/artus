@@ -73,7 +73,7 @@ class GeoCOCOExporter():
         return gdf
     
     def get_transform(self, sample):
-        """ Get affine transformation for a tif sample.
+        """Get affine transformation for a tif sample.
 
         Args:
             sample (str): the path or name of the sample with the extension that should be .tif
