@@ -99,12 +99,26 @@ class COCOSplitter(COCOStats):
         df_train = self.dataset.df.query("split == 'train'")
         df_val = self.dataset.df.query("split == 'val'")
         df_test = self.dataset.df.query("split == 'test'")
-
-        df_train = dataset.Dataset(df_train)
-        df_val = dataset.Dataset(df_val)
-        df_test = dataset.Dataset(df_test)
+	
+	
+        dataset_train, dataset_val, dataset_test = self.create_train_test_val_datasets()
         
-        df_train.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_train_name))
-        df_val.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_val_name))
-        df_test.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_test_name))
+        # filter images that are moved in the other datasets
+        dataset_train.df = dataset_train.df[dataset_train.df.img_filename.isin(df_train["img_filename"])].reset_index()
+        # filter categories that have been deleted
+        dataset_train.df = dataset_train.df[dataset_train.df.cat_name.isin(df_train["cat_name"])].reset_index()
+
+        dataset_val.df = dataset_val.df[dataset_val.df.img_filename.isin(df_val["img_filename"])].reset_index()
+        dataset_val.df = dataset_val.df[dataset_val.df.cat_name.isin(df_val["cat_name"])].reset_index()
+
+        dataset_test.df = dataset_test.df[dataset_test.df.img_filename.isin(df_test["img_filename"])].reset_index()
+        dataset_test.df = dataset_test.df[dataset_test.df.cat_name.isin(df_test["cat_name"])].reset_index()
+        
+        dataset_train.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_train_name))
+        dataset_val.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_val_name))
+        dataset_test.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_test_name))
+        
+        
+        
+
         
