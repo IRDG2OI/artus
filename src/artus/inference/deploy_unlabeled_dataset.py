@@ -21,7 +21,7 @@ def create_or_load_dataset(dataset_name, dataset_type=['unlabeled', 'coco'], ima
         label_type : 'segmentations' for mask or 'detections' for bounding box annotations
     
     Returns : 
-        A fiftyone dataset with at least fields : id, coco_id, filepath, ground_truth annotations (if provided), tags and basic metadata.
+        A :class:`fiftyone.core.dataset` with at least 6 fields : id, coco_id, filepath, ground_truth annotations (if provided), tags and basic metadata.
     '''
     
     if dataset_name not in fo.list_datasets():

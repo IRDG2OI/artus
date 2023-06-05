@@ -1,3 +1,12 @@
+""" Tile raster and/or vector layer.
+
+Depending on machine resources (such as GPU cache storage) available to user, 
+the process to prepare the data for model trainings can be adapted. To process
+large raster files, you can tile them into smaller tiles. Optionnally, if the 
+raster is annotated with a vector layer, the vector layer can be clipped to the
+same boundaries.
+"""
+
 import solaris.tile as solt
 import rasterio
 import os
@@ -8,16 +17,22 @@ from artus.prepare.crs_settings import check_crs
 
 
 def tile_ortho(ortho_path, dest_dir, tuple_tile_size, h_shift=0.0, v_shift=0.0):
-    ''' Tile a tif file
-    #Inputs:
-    - ortho_path: the path to tif file
-    - dest_dir : the directory where the tile will be saved (create the directory if it does not exists)
-    - src_tile_size: a tuple indicating the length and width of the tiles produced
-    - h_shift : a float between 0 and 1 representing the fraction of shifting between horizontal neighbooring tiles
-    - v_shift : a float between 0 and 1 representing the fraction of shifting between vertical neighbooring tiles
-    #Outputs:
-    - tiles with 3 color channels in tif format are saved in the dest_dir
-    '''
+    """ Tile a tif file.
+
+    Tiles's size can be set with pixel values or in meters. Tiles are cut according to a regular
+    grid if h_shift and v_shift are set to 0 or according to an overlapping grid. Overlaps between the tiles
+    is customizable.
+
+    Args:
+        ortho_path (str): the path to raster in tif format
+        dest_dir (str): the directory where the tile will be saved (create the directory if it does not exists)
+        src_tile_size (tuple): a tuple indicating the length and width of the tiles produced. Can be pixel values or meters.
+        h_shift (float): a float between 0 and 1 representing the fraction of shifting between horizontal neighbooring tiles
+        v_shift (float): a float between 0 and 1 representing the fraction of shifting between vertical neighbooring tiles
+    
+    Returns:
+        Tiles with 3 color channels in tif format saved in the dest_dir.
+    """
 
     raster_tiler = solt.raster_tile.RasterTiler(
         dest_dir=dest_dir,
@@ -64,19 +79,22 @@ def tile_ortho(ortho_path, dest_dir, tuple_tile_size, h_shift=0.0, v_shift=0.0):
     
 
 def clip_annotated_ortho(annot_path, raster_path, matching_crs, dest_dir, tuple_tile_size, h_shift=0, v_shift=0, annot_type=['segm', 'bbox']):
-    ''' A function that clip annotated raster into tiles.
-    # Inputs:
-    - annot_path : the path to the spatialannotations (shapefile or geojson)
-    - raster_path : the path to an annotated raster (tif file)
-    - matching_crs : the epsg_code matching the raster and annotation file
-    - dest_dir : the destination directory where tiles and matching geojsons annotations will be saved
-    - tuple_tile_size : a tuple indicating the length and width of the tiles produced
-    - h_shift :  a float between 0 and 1 representing the fraction of shifting between horizontal neighbooring tiles
-    - v_shift : a float between 0 and 1 representing the fraction of shifting between vertical neighbooring tiles
-    - annot_type : whether the anntoations are segmentation or bounding boxes
-    # Output : 
-    - a directory at the dest_dir path containig tiles and matching geojsons for each tile containing annotations (if the tile did not include annotations then the geojson     file is not created)
-    '''
+    """ A function that clips a raster annotated with a vector layer to the same boundaries.
+    
+    Args:
+        annot_path (str): the path to the vector (shapefile or geojson)
+        raster_path (str): the path to an annotated raster (tif file)
+        matching_crs (str): the epsg_code matching the raster and annotation file
+        dest_dir (str): the path to the destination directory where tiles and matching geojsons annotations will be saved
+        tuple_tile_size (tuple) : a tuple indicating the length and width of the tiles produced
+        h_shift (float, optional):  a float between 0 and 1 representing the fraction of shifting between horizontal neighbooring tiles
+        v_shift (float, optional): a float between 0 and 1 representing the fraction of shifting between vertical neighbooring tiles
+        annot_type (str): whether the annotations are segmentation 'segm' or bounding boxes 'bbox'
+
+    Returns: 
+        A directory at the dest_dir path containig tiles and matching geojsons for each tile containing annotations.
+        If the tile did not include annotations then the geojson file is not created.
+    """
 
     ortho = rasterio.open(raster_path)
     annotations = geopandas.read_file(annot_path)
