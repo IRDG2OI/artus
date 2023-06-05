@@ -1,17 +1,5 @@
-# +
-from detectron2.utils.logger import setup_logger
-from detectron2.data.datasets import register_coco_instances
-from detectron2.engine import DefaultTrainer
-from detectron2.data import DatasetCatalog, MetadataCatalog
-from detectron2.utils.visualizer import Visualizer, ColorMode
-from detectron2.config import get_cfg
-from detectron2 import model_zoo
-from detectron2.data import build_detection_train_loader
-from detectron2.evaluation import COCOEvaluator
-import numpy as np
 from detectron2.data import detection_utils as utils
 import detectron2.data.transforms as T
-from detectron2.data import build_detection_test_loader, build_detection_train_loader
 import copy
 import torch
 

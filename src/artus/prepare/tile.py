@@ -2,8 +2,6 @@ import solaris.tile as solt
 import rasterio
 import os
 import geopandas
-import yaml
-from rasterio.crs import CRS
 import numpy as np
 
 from artus.prepare.crs_settings import check_crs

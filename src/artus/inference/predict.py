@@ -1,3 +1,9 @@
+"""Module to use a model checkpoint and predict annotations on unlabeled images.
+
+Annotations produced by the model (called predictions) are segmentation masks for 
+instance segmentation tasks or bounding boxes for object detection tasks.
+"""
+
 from detectron2.engine import DefaultPredictor
 from detectron2.structures import Boxes, Instances
 from torchvision.transforms import functional as func
@@ -18,80 +24,93 @@ multiprocessing.set_start_method('spawn')
 os.environ["OPENCV_IO_MAX_IMAGE_PIXELS"]=pow(2,50).__str__()
 
 def build_predictor(config_path, device):
-    '''
-    Load a model in prediction mode
-    # Input :
-    - config_path : the path to a config file in yaml format
-    - device : 'cpu' or 'cuda'. Results of ("cuda" if torch.cuda.is_available() else "cpu")
-    # Output : 
-    - predictor : the model loaded to predict unlabeled images
-    '''
+    """ Load a model in indeference mode.
+    
+    Args:
+        config_path (str): the path to a config file in yaml format
+        device (str): 'cpu' or 'cuda'. Results of ("cuda" if torch.cuda.is_available() else "cpu")
+    
+    Returns 
+        predictor : the model loaded to predict unlabeled images
+    """
     cfg = add_config(config_path, device)
     predictor = DefaultPredictor(cfg)
     return predictor
 
 def predict(predictor, filepath):
+    """Predict masks or bounding boxes on an image.
+
+    Args:
+        predictor : a detectron2 predictor returned by `build_predictor()`
+        filepath (str): the absolute or relative path to the image
+    
+    Returns:
+        an ordered dict with the label predicted and the coordinates of the bbox or masks
+    """
     image = cv2.imread(filepath)
     outputs = predictor(image)
     return outputs
 
 def crop_mask(bbox, mask):
-    ''' Input : 
-        bbox : the bounding box of the object predicted.
-        mask : the mask of the object predicted returned bu detectron2 (it is actually a mask for the whole image
+    """ Crop the mask within a bounding box.
+
+    Args:
+        bbox (list) : a list of the bounding box's corners for the predicted object.
+        mask : the mask of the object predicted returned by detectron2. It is actually a mask for the whole image
         and 51 requires a mask within the bbox)
 
-        Output: 
-        a cropped mask corresponding to the inside of the bbox for the predicted object.'''
+    Returns: 
+        A cropped mask corresponding to the inside of the bbox for the predicted object."""
 
     x1, y1, x2, y2 = bbox.cpu().detach().numpy().astype(np.int32)
     return mask[y1:y2, x1:x2]
 
 def filter_confidence_labels(dataset, fo_field, confidence_thr=0):
-    '''
-    Filter labels that are smaller than the condidence threshold set.
+    """Filter labels that are smaller than the confidence threshold set.
 
-    # Input:
-    - dataset : a fiftyone dataset
-    - fo_field : a fiftyone field with model's predictions
-    - confidence_thr : a threshold for confidence of model's predictions 
+    Args:
+        dataset : a fiftyone dataset
+        fo_field (str): a fiftyone field with model's predictions
+        confidence_thr (float) : a threshold for confidence of model's predictions 
 
-    # Output : 
-    - dataset : the fiftyone dataset with labels smaller than the confidence threshold removed
-    ''' 
+    Returns:
+        dataset : the fiftyone dataset with labels smaller than the confidence threshold removed
+    """ 
     conf_filter = fo.FilterLabels(fo_field, F("confidence") > confidence_thr)
     dataset = dataset.add_stage(conf_filter)
     return dataset
 
 def filter_small_predictions(dataset, fo_field):
-    '''
-    Filter small predictions (2 or 3 square pixels) in a dataset
+    """Filter predictions covering less than 3 pixels in a dataset.
 
-    # Input:
-    - dataset : a fiftyone dataset
-    - fo_field : a fiftyone field with model's predictions
+    Predictions that are very small, i.e. smaller than 3 pixels, may trigger 
+    problems when exporting the fiftyone dataset. It is best practises to remove them.
 
-    # Output : 
-    - dataset : the fiftyone dataset with small predictions area removed
-    ''' 
+    Args:
+        dataset : a fiftyone dataset
+        fo_field (str): a fiftyone field with model's predictions
+
+    Returns: 
+        dataset : the fiftyone dataset with small predictions area removed
+    """ 
     stage = fo.FilterLabels(fo_field, F("points").length() > 0)
     dataset = dataset.add_stage(stage)
     return dataset
 
 def predict_on_sample(sample_filepath, device, predictor, nms_threshold, classes, type_of_preds=['segm', 'bbox']):
-    '''Use an AI model to predict segmentations mask or bounding boxes on an image.
+    """Use a loaded AI model to predict segmentations mask or bounding boxes on an image.
 
-    # Inputs:
-    - sample_filepath : the filepath to an image (jpg, png or tif file)
-    - predictor : the result of build_predictor() 
-    - device : whether to load data on cpu or gpu
-    - nms_threshold : the non-maximum-suppression threshold
-    - classes : a list of the classes predicted by the model
-    - type_of_preds : indicate if semgentation masks expeted of bounding boxes
+    Args:
+        sample_filepath (str): the filepath to an image (jpg, png or tif file)
+        predictor : the result of build_predictor() 
+        device : whether to load data on cpu or gpu
+        nms_threshold (float): the non-maximum-suppression threshold
+        classes : a list of the classes predicted by the model
+        type_of_preds : indicate if semgentation masks expeted of bounding boxes
 
     # Outputs :
     - a fiftyone field (fo.Detections) containing predictions for the sample
-    '''
+    """
     image = Image.open(sample_filepath)
     image = func.to_tensor(image).to(device)
     c, h, w = image.shape
@@ -142,7 +161,7 @@ def predict_on_sample(sample_filepath, device, predictor, nms_threshold, classes
 
 
 def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_field, tags=None, type_of_preds=['segm', 'bbox'], nms_threshold=1, confidence_thr=0):
-    '''Add predictions to a fiftyone dataset
+    """Add predictions to a fiftyone dataset
 
     # Inputs:
     - dataset : a fiftyone dataset
@@ -154,7 +173,7 @@ def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_
 
     # Outputs :
     - a dataset containing predictions for test samples
-    '''
+    """
     num_cores = 0
     detections=[]
     if tags:
@@ -197,7 +216,7 @@ def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_
     return test_set
 
 def apply_nms(outputs, nms_treshold, type_of_preds=['segm', 'bbox']) :
-    ''' 
+    """ 
     Inputs :
     1.outputs = list[dict] in the "outputs" inference format of detectron2 lib, 
     see : https://detectron2.readthedocs.io/en/latest/tutorials/models.html
@@ -211,7 +230,7 @@ def apply_nms(outputs, nms_treshold, type_of_preds=['segm', 'bbox']) :
     see :
     https://github.com/facebookresearch/detectron2/issues/978
     1.res = list[dict] in the "outputs" inference format of detectron2 lib 
-    '''
+    """
 
     detections = outputs['instances']
     pred_boxes = detections.pred_boxes.tensor

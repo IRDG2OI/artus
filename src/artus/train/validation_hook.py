@@ -1,24 +1,10 @@
 from detectron2.engine.hooks import HookBase
-from detectron2.evaluation import inference_context
 from detectron2.utils.logger import log_every_n_seconds
-from detectron2.data import DatasetMapper, build_detection_test_loader
-from detectron2.engine import DefaultTrainer
-from detectron2.utils.logger import setup_logger
-from detectron2.data.datasets import register_coco_instances
-from detectron2.data import DatasetCatalog, MetadataCatalog
-from detectron2.config import get_cfg
-from detectron2 import model_zoo
-from detectron2.data import build_detection_train_loader
-from detectron2.evaluation import COCOEvaluator
-import os
+import detectron2.utils.comm as comm
 import torch
-import matplotlib.pyplot as plt
 import time
 from datetime import datetime
-from tabulate import tabulate
 import numpy as np
-import os
-import detectron2.utils.comm as comm
 import torch
 import time
 import datetime

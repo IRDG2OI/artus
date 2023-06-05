@@ -1,21 +1,27 @@
+"""Create a fiftyone dataset with unlabeled or labeled images."""
+
+
 import fiftyone as fo
 import fiftyone.utils.coco as fouc
 import json
 import os
 
 def create_or_load_dataset(dataset_name, dataset_type=['unlabeled', 'coco'], images_path=None, annotations_path=None, df_test=None, label_type=['segmentations', 'detections']):
-    ''' If the dataset_name provided is in the local 51 database : the dataset is loaded from the database otherwise,
+    ''' Create a fiftyone labeled or unlabeled dataset.
+    
+    If the dataset_name provided is in the local 51 database : the dataset is loaded from the database otherwise,
     the dataset is created
 
-    Inputs : 
-    - dataset_name : the name of the dataset that you want to create or load
-    - images_path : a path to the directory containing the images
-    - annotations_path : a path to the COCO annotations files
-    - df_test : a path to the COCO annotations files for test images
-    - label_type : segmentation for mask or detections for bounding box annotations
+    Args:
+        dataset_name (str): the name of the dataset that you want to create or load
+        dataset_type (str): can be 'unlabeled' for images without annotations or 'coco' if images have coco annotations.
+        images_path (str): a path to the directory containing the images (can be tif, png or jpg images)
+        annotations_path (str, optional): a path to the COCO annotations files
+        df_test (str, optional): a path to the COCO annotations files for test images
+        label_type : 'segmentations' for mask or 'detections' for bounding box annotations
     
-    Output : 
-    - a fiftyone dataset with at least 5 fields : id, coco_id, filepath, ground_truth annotations, tags and basic metadata.
+    Returns : 
+        A fiftyone dataset with at least fields : id, coco_id, filepath, ground_truth annotations (if provided), tags and basic metadata.
     '''
     
     if dataset_name not in fo.list_datasets():
@@ -67,4 +73,5 @@ def create_or_load_dataset(dataset_name, dataset_type=['unlabeled', 'coco'], ima
         # load an existing dataset from the 51 database
         dataset = fo.load_dataset(dataset_name)
     
+    dataset.compute_metadata()
     return dataset

@@ -1,20 +1,10 @@
-from detectron2.evaluation import inference_context
-from detectron2.utils.logger import log_every_n_seconds
-from detectron2.engine import DefaultTrainer
-from detectron2.engine.hooks import HookBase
-from detectron2.utils.logger import setup_logger
-from detectron2.data import DatasetCatalog, MetadataCatalog, DatasetMapper, build_detection_train_loader, build_detection_test_loader
-from detectron2.data.datasets import register_coco_instances
-from detectron2.config import get_cfg, CfgNode
-from detectron2 import model_zoo
-from detectron2.evaluation import COCOEvaluator
-import numpy as np
-import os
-import torch
-import logging
 
-from data_augmentation import custom_mapper
-from validation_hook import LossEvalHook
+from detectron2.engine import DefaultTrainer
+from detectron2.data import DatasetMapper, build_detection_train_loader, build_detection_test_loader
+from detectron2.config import CfgNode
+from detectron2.evaluation import COCOEvaluator
+import os
+from artus.train.validation_hook import LossEvalHook
 
 class MyTrainer(DefaultTrainer):
     @classmethod
