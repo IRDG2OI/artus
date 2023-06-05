@@ -1,3 +1,21 @@
+"""A module to convert a coco file into a geojson file.
+
+Annotations in the coco file are pixel values but if they match with a georeferenced raster
+file (a tif file for example), they are spatialized with an affine transformation.
+
+Typical usage examples:
+
+    geojson_exporter = GeoCOCOExporter(
+    coco_path = 'path/to/coco/file.json',
+    sample_dir = 'path/to/tif/directory/', 
+    epsg_code = 'EPSG:4326', 
+    dest_path = 'path/to/export/directory/',
+    dest_name = 'predictions.geojson'
+)
+    geojson_exporter.export()
+
+"""
+
 from pylabel import importer
 import numpy as np
 from shapely.geometry import Polygon
@@ -7,18 +25,21 @@ import rasterio
 import os
 
 class GeoCOCOExporter():
-    '''
-    Class to convert a coco.json file into a geojson format
-    ## Inputs:
-    coco_path : the relative or absolute path top a coco.json file
-    sample_dir : the paht to the directory where the tif files are located (if sample_name is already the full path of the sample, no need to provide sample_dir)
-    epsg_code : the epsg_code (like EPSG:4326') to set the CRS of the geojson file
-    dest_path : the destination path where the results will be exported (if directory does not exist, it will be created)
-    dest_name : the name of the file to store
+    """Class to convert a `coco.json` file into a geojson file. 
 
-    ## Output:
-    A geojson file containing the masks of the coco file
-    '''
+    Annotations in the coco file are pixel values. When converted to geojson format
+    with an affine transformation, they become georeferenced.
+
+    Attributes:
+        coco_path (str): the relative or absolute path top a coco.json file
+        epsg_code (str): the epsg_code (like EPSG:4326') to set the CRS of the geojson file
+        dest_path (str): the destination path where the results will be exported. If the directory 
+            does not exist yet, it will be created.
+        dest_name (str): the name of the file to store
+        sample_dir (str, optional): the path to the directory where the tif files are located. 
+            If sample_name is already the full path of the sample, no need to provide sample_dir.
+
+    """
     def __init__(self, coco_path, epsg_code, dest_path, dest_name, sample_dir=None):
         self.coco_path = coco_path
         self.epsg_code = epsg_code
@@ -27,14 +48,12 @@ class GeoCOCOExporter():
         self.sample_dir = sample_dir
 
     def coco2gdf(self):
-        ''' Convert a coco fiel into a geopandas dataframe.
-        #Input : 
-        coco_path : the path to a coco.json file
+        """ Convert a coco file into a geopandas dataframe.
 
-        #Output :
-        gdf : a geopandas dataframe with annotation masks converted into shapely polygons but still with pixel values.
-        The polygons are indeed, not yet converted to spatial information.
-        '''
+        Returns:
+            gdf (:py:class: `geopandas.GeoDataFrame`): a dataframe with annotation masks converted into shapely polygons but still with pixel values.
+                The polygons are indeed, not yet converted to spatial information.
+        """
 
         coco_dataset = importer.ImportCoco(path=self.coco_path, name="coco_dataset")
         predictions = coco_dataset.df
@@ -54,13 +73,14 @@ class GeoCOCOExporter():
         return gdf
     
     def get_transform(self, sample):
-        ''' Get affine transformation for a tif sample
-        #Input :
-        sample: the path or name of the sample with the extension (.tif)
+        """ Get affine transformation for a tif sample.
 
-        #Output:
-        the affine.Affine shapely object with the 6 elements required for an affine trasnformation
-        '''
+        Args:
+            sample (str): the path or name of the sample with the extension that should be .tif
+
+        Returns:
+            the :py:class:`affine.Affine` shapely object with the 6 elements required for an affine transformation
+        """
         if self.sample_dir:
             sample = rasterio.open(os.path.join(self.sample_dir, sample))
         else:
@@ -68,14 +88,16 @@ class GeoCOCOExporter():
         return sample.transform
         
     def affine_transform(self, gdf):
-        ''' Aplly an affine trasnformation to every polygons (annotations) in a geopandas dataframe
-        #Input :
-        gdf : a geopandas dataframe containing a geometry column with shapely polygons in pixel value
-        epsg_code : the epsg code for the polygons
+        """ Apply an affine transformation to every polygons (annotations) in the 
+        geometry column of a :py:class:`geopandas.Dataframe`
+
+        Args:
+            gdf : a g:py:class:`geopandas.Dataframe` containing a geometry column with 
+                shapely polygons in pixel value.
         
-        #Output:
-        a geopandas dataframe with polygons spatialized to the desire CRS
-        '''
+        Returns:
+            A :py:class:`geopandas.Dataframe` with polygons spatialized to the desire CRS
+        """
 
         gdf['geometry'] = [solpol.convert_poly_coords(
             geom=polygon,
@@ -86,10 +108,11 @@ class GeoCOCOExporter():
         return gdf
     
     def export(self):
-        ''' Export the geopandas dataframe to geojson.
-        #Output:
-        a geojson file exported at the dest_path + dest_name.
-        '''
+        """ Export the geopandas dataframe to geojson.
+
+        Returns:
+            A geojson file exported at the dest_path + dest_name location.
+        """
         #check if dest_path exists (create it if needed)
         os.makedirs(self.dest_path, exist_ok=True)
 
