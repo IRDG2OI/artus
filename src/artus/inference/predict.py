@@ -28,7 +28,7 @@ def build_predictor(config_path, device):
     
     Args:
         config_path (str): the path to a config file in yaml format
-        device (str): 'cpu' or 'cuda'. Results of ("cuda" if torch.cuda.is_available() else "cpu")
+        device (str): 'cpu' or 'cuda'. Results of `"cuda" if torch.cuda.is_available() else "cpu"`
     
     Returns 
         predictor : the model loaded to predict unlabeled images
@@ -69,12 +69,12 @@ def filter_confidence_labels(dataset, fo_field, confidence_thr=0):
     """Filter labels that are smaller than the confidence threshold set.
 
     Args:
-        dataset : a fiftyone dataset
+        dataset : a :class:`fiftyone.core.dataset`
         fo_field (str): a fiftyone field with model's predictions
         confidence_thr (float) : a threshold for confidence of model's predictions 
 
     Returns:
-        dataset : the fiftyone dataset with labels smaller than the confidence threshold removed
+        dataset : the :class:`fiftyone.core.dataset` with labels smaller than the confidence threshold removed
     """ 
     conf_filter = fo.FilterLabels(fo_field, F("confidence") > confidence_thr)
     dataset = dataset.add_stage(conf_filter)
@@ -87,11 +87,11 @@ def filter_small_predictions(dataset, fo_field):
     problems when exporting the fiftyone dataset. It is best practises to remove them.
 
     Args:
-        dataset : a fiftyone dataset
+        dataset : a :class:`fiftyone.core.dataset`
         fo_field (str): a fiftyone field with model's predictions
 
     Returns: 
-        dataset : the fiftyone dataset with small predictions area removed
+        dataset : the :class:`fiftyone.core.dataset` with small predictions area removed
     """ 
     stage = fo.FilterLabels(fo_field, F("points").length() > 0)
     dataset = dataset.add_stage(stage)
@@ -103,13 +103,13 @@ def predict_on_sample(sample_filepath, device, predictor, nms_threshold, classes
     Args:
         sample_filepath (str): the filepath to an image (jpg, png or tif file)
         predictor : the result of build_predictor() 
-        device : whether to load data on cpu or gpu
-        nms_threshold (float): the non-maximum-suppression threshold
-        classes : a list of the classes predicted by the model
-        type_of_preds : indicate if semgentation masks expeted of bounding boxes
+        device (str): "cpu" or "cuda". Results of `"cuda" if torch.cuda.is_available() else "cpu"`
+        nms_threshold (float): the non-maximum-suppression threshold.
+        classes (list): a list of the classes that can be predicted by the AI model.
+        type_of_preds (str): indicate if semgentation masks "segm" expected or bounding boxes "bbox"
 
-    # Outputs :
-    - a fiftyone field (fo.Detections) containing predictions for the sample
+    Returns:
+        a fiftyone field :class:``fiftyone.core.detections`` containing predictions for the sample
     """
     image = Image.open(sample_filepath)
     image = func.to_tensor(image).to(device)
@@ -161,18 +161,24 @@ def predict_on_sample(sample_filepath, device, predictor, nms_threshold, classes
 
 
 def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_field, tags=None, type_of_preds=['segm', 'bbox'], nms_threshold=1, confidence_thr=0):
-    """Add predictions to a fiftyone dataset
+    """Add predictions to :class:`fiftyone.core.dataset`. 
 
-    # Inputs:
-    - dataset : a fiftyone dataset
-    - predictor : the result of build_predictor() 
-    - device : whether to load data on cpu or gpu
-    - classes : a list of the classes predicted by the model
-    - tags : a variable or a list of varaibles (optional) to filter the samples on which to predict
-    - type_of_preds : indicate if semgentation masks expeted of bounding boxes
+    All the images :class:`fiftyone.core.dataset` that have the tag indicated will be selected to be predicted by an AI model.
+    This function uses the GPU is available or parallelize through multiple CPU to predict on all the images of a dataset.
 
-    # Outputs :
-    - a dataset containing predictions for test samples
+    Args:
+        dataset: a :class:`fiftyone.core.dataset`  
+        predictor: the result of :py:func:`artus.inference.build_predictor()` 
+        device (str): "cpu" or "cuda". Results of `"cuda" if torch.cuda.is_available() else "cpu"`
+        classes (list): a list of the classes predicted by the model
+        predictions_field (str): the name of the fiftyone field that will be added to be dataset
+        tags (list or str): a variable or a list of variables (optional) to filter the samples on which to predict
+        type_of_preds (str): indicate if semgentation masks "segm" expected or bounding boxes "bbox"
+        confidence_thr (float): a threshold between 0 and 1. Predictions with lower confidence than this threshold will be filtered out 
+            of the :class:`fiftyone.core.dataset`
+
+    Returns:
+        a :class:`fiftyone.core.dataset` containing predictions for the tagged samples.
     """
     num_cores = 0
     detections=[]
@@ -215,21 +221,24 @@ def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_
 
     return test_set
 
-def apply_nms(outputs, nms_treshold, type_of_preds=['segm', 'bbox']) :
-    """ 
-    Inputs :
-    1.outputs = list[dict] in the "outputs" inference format of detectron2 lib, 
-    see : https://detectron2.readthedocs.io/en/latest/tutorials/models.html
-    2.nms_treshold = Overlap threshold used for non-maximum suppression (suppress boxes with
-                      IoU >= this threshold)
-    
-    Outputs :
-    The function applies the NMS technique for predictions of different class types,
-    the default Detectron2 parameter MODEL.ROI_HEADS.NMS_THRESH_TEST applies NMS only
-    for same class types instances :
-    see :
-    https://github.com/facebookresearch/detectron2/issues/978
-    1.res = list[dict] in the "outputs" inference format of detectron2 lib 
+def apply_nms(outputs, nms_threshold, type_of_preds=['segm', 'bbox']) :
+    """ Apply non-maximum threshold on predictions made on a sample.
+
+    Non Maximum Suppression (NMS) is a technique to select one entity, i.e. bounding boxes or masks,
+    out of many overlapping entities based on the IoU (intersection over union).The function 
+    applies the NMS technique for predictions of different class types, the default Detectron2 
+    parameter MODEL.ROI_HEADS.NMS_THRESH_TEST applies NMS only for same class types instances
+    `https://github.com/facebookresearch/detectron2/issues/978`
+
+    Args:
+        outputs (list[dict]): a list of dict in the "outputs" inference format of detectron2 lib 
+        `https://detectron2.readthedocs.io/en/latest/tutorials/models.html`
+        nms_threshold (float): Overlap threshold used for non-maximum suppression, suppress boxes or
+            masks with IoU >= threshold)
+        type_of_preds (str): indicate if predictions are semgentation masks "segm" or bounding boxes "bbox"
+
+    Returns:
+        res (list[dict]): the "outputs" inference format of detectron2 lib 
     """
 
     detections = outputs['instances']
@@ -242,7 +251,7 @@ def apply_nms(outputs, nms_treshold, type_of_preds=['segm', 'bbox']) :
     # Performs non-maximum suppression (NMS) on the boxes according to their intersection-over-union (IoU).
     # see :
     # https://pytorch.org/vision/stable/generated/torchvision.ops.nms.html#torchvision.ops.nms
-    keep_idx = nms(pred_boxes, scores, nms_treshold)
+    keep_idx = nms(pred_boxes, scores, nms_threshold)
     res = Instances(image_size)
     res.pred_boxes = Boxes(pred_boxes[keep_idx])
     res.scores = scores[keep_idx]
@@ -251,6 +260,5 @@ def apply_nms(outputs, nms_treshold, type_of_preds=['segm', 'bbox']) :
         res.pred_masks = pred_masks[keep_idx]
     res = {"instances": res}
 
-#def export_spatial(raster_path, config_path):
     
     
