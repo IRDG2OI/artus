@@ -18,8 +18,8 @@ sys.path.insert(0, os.path.abspath('../artus/'))
 # -- Project information -----------------------------------------------------
 
 project = 'artus'
-copyright = '2023, 6tronl'
-author = '6tronl'
+copyright = '2023, Justine Talpaert Daudon'
+author = 'Justine Talpaert Daudon'
 
 # The full version, including alpha/beta/rc tags
 release = '0.1.0'
