@@ -1,3 +1,4 @@
 artus.egg-info/
 build/
 docs/_build/html
+artus/__pycache__/

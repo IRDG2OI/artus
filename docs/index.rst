@@ -7,10 +7,13 @@ Welcome to artus's documentation!
 =================================
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+   :caption: Modules
 
-   modules
+   evaluate_model
+   inference
+   prepare
+   spatialize
+   train
 
 Indices and tables
 ==================
