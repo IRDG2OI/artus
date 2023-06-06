@@ -1,5 +1,5 @@
-src
-===
+artus
+=====
 
 .. toctree::
    :maxdepth: 4

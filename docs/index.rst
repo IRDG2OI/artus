@@ -7,7 +7,7 @@ Welcome to artus's documentation!
 =================================
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Contents:
 
    modules
