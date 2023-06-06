@@ -1,13 +1,13 @@
 """The module provides a splitter to prepare coco annotations files for deep learning training process.
 
-The :py:class: `COCOSplitter` splits a coco annnotations file into 3 files : the coco_train, 
+The class: `COCOSplitter` splits a coco annnotations file into 3 files : the coco_train, 
 coco_test and coco_val. Annotations are firstly parsed so under-reprensentated classes are removed.
 Proportions of annotations per class are maintained in the splits.
 
 
 Typical usage examples:
 
-    :py:`splitter = COCOSplitter(
+    `splitter = COCOSplitter(
         coco_path='/path/to/coco.json',
         export_dir='/path/to/export/coco/splits/',
         coco_train_name='coco_train',
@@ -19,7 +19,7 @@ Typical usage examples:
         test_pct=.1,
         batch_size=8
     )`
-    :py:`splitter.split()`
+    `splitter.split()`
 
 """
 
@@ -41,7 +41,7 @@ class COCOSplitter(COCOStats):
         coco_test_name (str): the name of the file with the annotations for testing
         coco_val_name (str): the name of the file with the annotations for validation
         min_nb_occurrences (int): the minimum number of occurrences of a class to be 
-            kept in the dataset to remove under representated classes
+        kept in the dataset to remove under representated classes
         train_pct (float): the fraction of annotations that will go into the train coco file
         val_pct (float): the fraction of annotations that will go into the validation coco file
         test_pct (float): the fraction of annotations that will go into the test coco file
@@ -58,14 +58,12 @@ class COCOSplitter(COCOStats):
             coco_test_name (str): the name of the file with the annotations for testing
             coco_val_name (str): the name of the file with the annotations for validation
             min_nb_occurrences (int): the minimum number of occurrences of a class to be 
-                kept in the dataset to remove under representated classes
+            kept in the dataset to remove under representated classes
             train_pct (float): the fraction of annotations that will go into the train coco file
             val_pct (float): the fraction of annotations that will go into the validation coco file
             test_pct (float): the fraction of annotations that will go into the test coco file
             batch_size (int): number of images per batch process
-        """
-        
-        
+        """        
         self.dataset = self.process_coco(coco_path, min_nb_occurrences)
         self.coco_path = coco_path
         self.export_dir = export_dir

@@ -6,10 +6,10 @@ classes with the min_nb_occurrences argument.
 
 Typical usage examples:
 
-  :py:`cocostats = COCOStats(coco_path='/a/path/to/coco.json', min_nb_occurrences=50)`
-  :py:`nb_images = cocostats.get_nb_images()`
-  :py:`class_occ = cocostats.get_class_stats()`
-  :py:`cocostats.export_stats(export_path='/path/to/dir/export.csv)`
+  `cocostats = COCOStats(coco_path='/a/path/to/coco.json', min_nb_occurrences=50)`
+  `nb_images = cocostats.get_nb_images()`
+  `class_occ = cocostats.get_class_stats()`
+  `cocostats.export_stats(export_path='/path/to/dir/export.csv)`
 """
 
 from pylabel import importer

@@ -120,7 +120,7 @@ class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
 
         Returns:
             :class:`shapely.Polygon`: a shapely polygon that is a square if label was 
-                bouding boxes or a polygon if label was a polyline. Shapely polygons are still pixel values.
+            bouding boxes or a polygon if label was a polyline. Shapely polygons are still pixel values.
         """
 
         imw, imh = (metadata.width, metadata.height)

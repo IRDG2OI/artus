@@ -222,7 +222,7 @@ def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_
     return test_set
 
 def apply_nms(outputs, nms_threshold, type_of_preds=['segm', 'bbox']) :
-    """ Apply non-maximum threshold on predictions made on a sample.
+    """Apply non-maximum threshold on predictions made on a sample.
 
     Non Maximum Suppression NMS is a technique to select one entity, i.e. bounding boxes or masks,
     out of many overlapping entities based on the IoU (intersection over union).The function 
@@ -232,7 +232,6 @@ def apply_nms(outputs, nms_threshold, type_of_preds=['segm', 'bbox']) :
 
     Args:
         outputs (list[dict]): a list of dict in the "outputs" inference format of detectron2 lib 
-        `https://detectron2.readthedocs.io/en/latest/tutorials/models.html`
         nms_threshold (float): Overlap threshold used for non-maximum suppression, suppress boxes or
             masks with IoU >= threshold
         type_of_preds (str): indicate if predictions are semgentation masks "segm" or bounding boxes "bbox"
