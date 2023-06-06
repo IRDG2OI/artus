@@ -10,7 +10,7 @@ Welcome to artus's documentation!
    :maxdepth: 4
    :caption: Modules
 
-   artus
+   modules
    
 Indices and tables
 ==================
