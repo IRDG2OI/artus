@@ -91,10 +91,14 @@ class COCOSplitter(COCOStats):
         return dataset_train, dataset_val, dataset_test
     
     def split_coco(self):
-        """Splits coco files and export them in COCO format in the :py:attribute: `export_dir`."""
-        self.dataset.splitter.StratifiedGroupShuffleSplit(train_pct=self.train_pct, val_pct=self.val_pct, test_pct=self.test_pct, batch_size=self.batch_size)
+        """Splits coco files and export them in COCO format in the :py:attribute: `export_dir`.
         
-        self.dataset.analyze.ShowClassSplits()
+        Returns:
+            The proportions of class between the splits.
+        """
+        self.dataset.splitter.StratifiedGroupShuffleSplit(train_pct=self.train_pct, val_pct=self.val_pct, test_pct=self.test_pct, batch_size=self.batch_size)
+
+        class_prop = self.dataset.analyze.ShowClassSplits()
 
         df_train = self.dataset.df.query("split == 'train'")
         df_val = self.dataset.df.query("split == 'val'")
@@ -117,7 +121,9 @@ class COCOSplitter(COCOStats):
         dataset_train.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_train_name))
         dataset_val.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_val_name))
         dataset_test.export.ExportToCoco(output_path=os.path.join(self.export_dir, self.coco_test_name))
-        
+
+        return class_prop
+
         
         
 

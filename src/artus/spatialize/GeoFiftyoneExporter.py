@@ -1,3 +1,24 @@
+"""A module to convert a :class:`fiftyone.core.dataset` into a geojson file.
+
+Annotations in the fiftyone dataset are masks or bounding box, mapped as pixel values 
+but if they match with a georeferenced raster file (a tif file for example), 
+they are spatialized with an affine transformation.
+
+Typical usage examples:
+
+    geojson_exporter = GeoCOCOExporter(
+    coco_path = 'path/to/coco/file.json',
+    sample_dir = 'path/to/tif/directory/', 
+    epsg_code = 'EPSG:4326', 
+    dest_path = 'path/to/export/directory/',
+    dest_name = 'predictions.geojson'
+)
+    geojson_exporter.export()
+
+"""
+
+
+
 import pandas as pd
 import fiftyone as fo
 import fiftyone.utils.data as foud
@@ -8,6 +29,8 @@ from artus.spatialize.GeoCOCOExporter import GeoCOCOExporter
 class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter): 
     """Export a fiftyone dataset to a geospatial format (geojson).
 
+     This is only possible if samples are raster format (i.e. tif).
+
      Datasets of this type are exported in the following format:
 
          <export_dir>/
@@ -17,7 +40,8 @@ class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
     
     Attributes:
          export_dir: the directory to write the export
-         label_type : the label_type of the concerned fiftyone field ('polylines' for segmentation annotations or 'detections' for bbox annotations)
+         label_type : the label_type of the concerned fiftyone field ('polylines' 
+            for segmentation annotations or 'detections' for bbox annotations)
          epsg_code : the epsg code (for example : '4326' for world coordinates) in which the results will be exported
          dest_name : the file name of the geojson file with the extension (for example : 'spatial_predictions.geojson')
     """
@@ -83,6 +107,18 @@ class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
         self.sample_collection = sample_collection
 
     def shapely_polygons(self, label, metadata):
+        """Transform a :class:`fiftyone.core.label.Label` into 
+        a shapely polygon. 
+
+        Args:
+            label (:class:`fiftyone.core.label.Label`): a detection or polylines field.
+            metadata (:class:`fiftyone.core.metadata.ImageMetadata`): metadata of the sample
+
+        Returns:
+            :class:`shapely.Polygon`: a shapely polygon that is a square if label was 
+                bouding boxes or a polygon if label was a polyline. Shapely polygons are still pixel values.
+        """
+
         imw, imh = (metadata.width, metadata.height)
         if self.label_type=='detections':
             polygon = label.to_shapely(frame_size=(imw,imh))
@@ -123,7 +159,8 @@ class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
         """Performs any necessary actions after the last sample has been
         exported.
         This method is called when the exporter's context manager interface is
-        exited, :func:`DatasetExporter.__exit__`.
+        exited, :func:`DatasetExporter.__exit__`. Polygons are converted to a world
+        coordinates with an affine transformation.
 
         Args:
             *args: the arguments to :func:`DatasetExporter.__exit__`
