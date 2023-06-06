@@ -8,5 +8,5 @@ rm ./artus.prepare.rst
 rm ./artus.spatialize.rst
 rm ./artus.train.rst
 
-sphinx-apidoc -o . ../artus
+sphinx-apidoc -o . ../../artus
 make html
