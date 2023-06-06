@@ -10,12 +10,8 @@ Welcome to artus's documentation!
    :maxdepth: 4
    :caption: Modules
 
-   evaluate_model
-   inference
-   prepare
-   spatialize
-   train
-
+   artus
+   
 Indices and tables
 ==================
 
