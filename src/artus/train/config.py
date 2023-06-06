@@ -1,23 +1,42 @@
+"""A module to handle a config file in yaml format and build a CfgNode.
+
+An example of the config file expected can be found in artus's tutorials at
+https://github.com/6tronl/artus-examples/blob/main/configs/x101_allsites_species_overlapping25_tiles5000_ITER3000.yml
+"""
+
 from detectron2 import model_zoo
 import yaml
 
 
 def read_config(config_path):
-    '''
-    Read a yaml file used to config a model for training or inference.
-    # Input :
-    - config_path : the path to a config file in yaml format
-    # Output : 
-    - a python object 
-    '''
+    """ Read a yaml file used to config a model for training or inference.
+
+    Args:
+        config_path (str) : the path to a config file in yaml format
+    
+    Returns:
+        A python object 
+    """
     with open(config_path) as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
     return config
 	
 
 def add_config(cfg, config_path, device, train_dataset, test_dataset, output_dir=None, mode=['train', 'inference']):
-    """
-    Add config for DL model coming from a yaml config file.
+    """Add config for DL model coming from a yaml config file.
+
+    Args:
+        cfg (CfgNode): a config file in detectron2 format
+        config_path (str): the path to a config file following the format provided in the tutorials.
+        device (str): 'cpu' or 'cuda'. Results of `"cuda" if torch.cuda.is_available() else "cpu"`
+        train_dataset (str): name of the registered dataset for training
+        test_dataset (str): name of the registered dataset for validation
+        output_dir (str, optional): the path to the output directory. Defaults to None.
+        mode (list, optional): Whether this config will be added in a training or inference use case. 
+            Defaults to ['train', 'inference'].
+
+    Returns:
+        CfgNode: a custom config file for training a deep learning model
     """
     config = read_config(config_path)
         

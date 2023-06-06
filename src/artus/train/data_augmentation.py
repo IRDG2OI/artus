@@ -1,3 +1,5 @@
+"""A module to perform data augmentation during the training and/or inference process"""
+
 from detectron2.data import detection_utils as utils
 import detectron2.data.transforms as T
 import copy
@@ -5,6 +7,16 @@ import torch
 
 
 def custom_mapper(dataset_dict):
+    """A custom mapper to make data augmentation with the images
+
+    Custom mapper performs resizing, flipping, color editor to artificially augment data. 
+
+    Args:
+        dataset_dict (dict): a dict mapping the images along with their labels.
+
+    Returns:
+        dict: a dict mapping the augmentated images along with their labels
+    """
     dataset_dict = copy.deepcopy(dataset_dict)  # it will be modified by code below
     image = utils.read_image(dataset_dict["file_name"], format="BGR")
     transform_list = [

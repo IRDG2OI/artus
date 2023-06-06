@@ -1,3 +1,5 @@
+"""A detectron2 hook system to make validation during the training process."""
+
 from detectron2.engine.hooks import HookBase
 from detectron2.utils.logger import log_every_n_seconds
 import detectron2.utils.comm as comm
@@ -13,6 +15,13 @@ import logging
 
 class LossEvalHook(HookBase):
     def __init__(self, eval_period, model, data_loader):
+        """_summary_
+
+        Args:
+            eval_period (int): the number of iteration needed to perform a validation step.
+            model: a neural network
+            data_loader (:class:`torch.utils.data.DataLoader`): a torch dataloader
+        """
         self._model = model
         self._period = eval_period
         self._data_loader = data_loader
