@@ -7,6 +7,7 @@ Welcome to artus's documentation!
 =================================
 
 .. toctree::
+   :maxdepth: 4
    :caption: Modules
 
    evaluate_model
