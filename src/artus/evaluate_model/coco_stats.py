@@ -23,7 +23,8 @@ def rm_min_classes(dataset, min_nb_occurrences):
     Args:
         dataset: a coco file read with importer.ImportCoco() from pylabel. This function
         returns a dataframe where one row is one label
-        min_nb_occurrences (int): an integer that is the minimum number of occurrences of a class to be kept in the dataset
+        min_nb_occurrences (int): an integer that is the minimum number of occurrences 
+        of a class to be kept in the dataset
 
     Returns:
         The same dataframe format but classes that have less than the minimum number of 
@@ -62,7 +63,7 @@ class COCOStats():
     Attributes:
         coco_path (str): a path to a coco file
         min_nb_occurrences (int): an integer that is the minimum number of occurrences of a 
-        class to be kept in the dataframe (remove under representated classes)
+        class to be kept in the dataframe.
     """
     def __init__(self, coco_path, min_nb_occurrences=None):
         """Initializes the instance by reading the coco_path file and 
