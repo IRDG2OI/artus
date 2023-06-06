@@ -6,18 +6,22 @@ they are spatialized with an affine transformation.
 
 Typical usage examples:
 
-    geojson_exporter = GeoCOCOExporter(
-    coco_path = 'path/to/coco/file.json',
-    sample_dir = 'path/to/tif/directory/', 
+    dataset = fo.load_dataset('dataset_name')
+
+    geojson_exporter = GeoFiftyoneExporter(
+    export_dir = '/path/to/directory/', 
     epsg_code = 'EPSG:4326', 
-    dest_path = 'path/to/export/directory/',
-    dest_name = 'predictions.geojson'
-)
-    geojson_exporter.export()
+    label_type = 'detections',
+    dest_name = 'spatial_predictions.geojson'
+    )
+
+    dataset.export(
+    dataset_exporter=geojson_exporter,
+    label_field='predictions',
+    export_media=False
+    )
 
 """
-
-
 
 import pandas as pd
 import fiftyone as fo
