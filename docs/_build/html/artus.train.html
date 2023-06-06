@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artus.train package &mdash; artus 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="artus.spatialize package" href="artus.spatialize.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            artus
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="artus.html">artus package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="artus.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="artus.evaluate_model.html">artus.evaluate_model package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="artus.inference.html">artus.inference package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="artus.prepare.html">artus.prepare package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="artus.spatialize.html">artus.spatialize package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">artus.train package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artus.html#module-artus">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">artus</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+          <li class="breadcrumb-item"><a href="artus.html">artus package</a></li>
+      <li class="breadcrumb-item active">artus.train package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/artus.train.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="artus-train-package">
+<h1>artus.train package<a class="headerlink" href="#artus-train-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-artus.train.build_trainer">
+<span id="artus-train-build-trainer-module"></span><h2>artus.train.build_trainer module<a class="headerlink" href="#module-artus.train.build_trainer" title="Permalink to this heading"></a></h2>
+<p>Build a  to train deep learning model.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="artus.train.build_trainer.MyTrainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artus.train.build_trainer.</span></span><span class="sig-name descname"><span class="pre">MyTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.build_trainer.MyTrainer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultTrainer</span></code></p>
+<p>A custom trainer that performs validation loop.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="artus.train.build_trainer.MyTrainer.build_evaluator">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_evaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.build_trainer.MyTrainer.build_evaluator" title="Permalink to this definition"></a></dt>
+<dd><p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg</strong> (<em>CfgNode</em>) – config file in detectron2 format</p></li>
+<li><p><strong>dataset_name</strong> (<em>str</em>) – name of the dataset</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the directory where results of training
+and evaluation will be saved. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an evaluator for coco dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">detectron2.evaluation.COCOEvaluator</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artus.train.build_trainer.MyTrainer.build_hooks">
+<span class="sig-name descname"><span class="pre">build_hooks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.build_trainer.MyTrainer.build_hooks" title="Permalink to this definition"></a></dt>
+<dd><p>Build a hook to make validation on the validation dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>validation metrics</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>hooks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artus.train.build_trainer.MyTrainer.build_test_loader">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_test_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CfgNode</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.build_trainer.MyTrainer.build_test_loader" title="Permalink to this definition"></a></dt>
+<dd><p>Build a test dataloader.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg</strong> (<em>CfgNode</em>) – config file in detectron2 format</p></li>
+<li><p><strong>dataset_name</strong> (<em>str</em>) – the name of the dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A test dataloader.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="artus.train.build_trainer.MyTrainer.build_train_loader">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_train_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.build_trainer.MyTrainer.build_train_loader" title="Permalink to this definition"></a></dt>
+<dd><p>Build a train dataloader.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<em>CfgNode</em>) – config file in detectron2 format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A train dataloader.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-artus.train.config">
+<span id="artus-train-config-module"></span><h2>artus.train.config module<a class="headerlink" href="#module-artus.train.config" title="Permalink to this heading"></a></h2>
+<p>A module to handle a config file in yaml format and build a CfgNode.</p>
+<p>An example of the config file expected can be found in artus’s tutorials at
+<a class="reference external" href="https://github.com/6tronl/artus-examples/blob/main/configs/x101_allsites_species_overlapping25_tiles5000_ITER3000.yml">https://github.com/6tronl/artus-examples/blob/main/configs/x101_allsites_species_overlapping25_tiles5000_ITER3000.yml</a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.train.config.add_config">
+<span class="sig-prename descclassname"><span class="pre">artus.train.config.</span></span><span class="sig-name descname"><span class="pre">add_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['train',</span> <span class="pre">'inference']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.config.add_config" title="Permalink to this definition"></a></dt>
+<dd><p>Add config for DL model coming from a yaml config file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg</strong> (<em>CfgNode</em>) – a config file in detectron2 format</p></li>
+<li><p><strong>config_path</strong> (<em>str</em>) – the path to a config file following the format provided in the tutorials.</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – ‘cpu’ or ‘cuda’. Results of <cite>“cuda” if torch.cuda.is_available() else “cpu”</cite></p></li>
+<li><p><strong>train_dataset</strong> (<em>str</em>) – name of the registered dataset for training</p></li>
+<li><p><strong>test_dataset</strong> (<em>str</em>) – name of the registered dataset for validation</p></li>
+<li><p><strong>output_dir</strong> (<em>str</em><em>, </em><em>optional</em>) – the path to the output directory. Defaults to None.</p></li>
+<li><p><strong>mode</strong> (<em>list</em><em>, </em><em>optional</em>) – Whether this config will be added in a training or inference use case.
+Defaults to [‘train’, ‘inference’].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a custom config file for training a deep learning model</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CfgNode</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.train.config.read_config">
+<span class="sig-prename descclassname"><span class="pre">artus.train.config.</span></span><span class="sig-name descname"><span class="pre">read_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.config.read_config" title="Permalink to this definition"></a></dt>
+<dd><p>Read a yaml file used to config a model for training or inference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_path</strong> (<em>str</em>) – the path to a config file in yaml format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A python object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artus.train.data_augmentation">
+<span id="artus-train-data-augmentation-module"></span><h2>artus.train.data_augmentation module<a class="headerlink" href="#module-artus.train.data_augmentation" title="Permalink to this heading"></a></h2>
+<p>A module to perform data augmentation during the training and/or inference process</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.train.data_augmentation.custom_mapper">
+<span class="sig-prename descclassname"><span class="pre">artus.train.data_augmentation.</span></span><span class="sig-name descname"><span class="pre">custom_mapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.data_augmentation.custom_mapper" title="Permalink to this definition"></a></dt>
+<dd><p>A custom mapper to make data augmentation with the images</p>
+<p>Custom mapper performs resizing, flipping, color editor to artificially augment data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset_dict</strong> (<em>dict</em>) – a dict mapping the images along with their labels.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dict mapping the augmentated images along with their labels</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artus.train.train">
+<span id="artus-train-train-module"></span><h2>artus.train.train module<a class="headerlink" href="#module-artus.train.train" title="Permalink to this heading"></a></h2>
+<p>A module to train a deep learning model with a config file in the yaml format.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.train.train.add_logs_path_to_config">
+<span class="sig-prename descclassname"><span class="pre">artus.train.train.</span></span><span class="sig-name descname"><span class="pre">add_logs_path_to_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.train.add_logs_path_to_config" title="Permalink to this definition"></a></dt>
+<dd><p>Add logs paths to the config file to keep track of trained models.
+:param config_path: the path to a config file (yaml)
+:type config_path: str
+:param checkpoint_path_dict: a dict including the ‘CHECKPOINT’ (the path to the checkpoint saved)
+:type checkpoint_path_dict: dict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The same config file with the path to the final checkpoint added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.train.train.train_model">
+<span class="sig-prename descclassname"><span class="pre">artus.train.train.</span></span><span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.train.train_model" title="Permalink to this definition"></a></dt>
+<dd><p>A function that trains a deep learning model with detectron2.</p>
+<p>Support multiple deep learning tasks : object detection and instance segmentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_path</strong> – the path to a config file (yaml)</p>
+</dd>
+</dl>
+<p>Returns:
+A folder within the logs directory with the checkpoint (.pth) of the model and events file
+for visualization of the training and validation metrics with tensorboard.
+A subdirectory is also created with the inference resultst of the validation step.</p>
+</dd></dl>
+
+</section>
+<section id="module-artus.train.validation_hook">
+<span id="artus-train-validation-hook-module"></span><h2>artus.train.validation_hook module<a class="headerlink" href="#module-artus.train.validation_hook" title="Permalink to this heading"></a></h2>
+<p>A detectron2 hook system to make validation during the training process.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="artus.train.validation_hook.LossEvalHook">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">artus.train.validation_hook.</span></span><span class="sig-name descname"><span class="pre">LossEvalHook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eval_period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.validation_hook.LossEvalHook" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">HookBase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="artus.train.validation_hook.LossEvalHook.after_step">
+<span class="sig-name descname"><span class="pre">after_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#artus.train.validation_hook.LossEvalHook.after_step" title="Permalink to this definition"></a></dt>
+<dd><p>Called after each iteration.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-artus.train">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-artus.train" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="artus.spatialize.html" class="btn btn-neutral float-left" title="artus.spatialize package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 6tronl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

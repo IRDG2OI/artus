@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>artus.inference package &mdash; artus 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="artus.prepare package" href="artus.prepare.html" />
+    <link rel="prev" title="artus.evaluate_model package" href="artus.evaluate_model.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            artus
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="artus.html">artus package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="artus.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="artus.evaluate_model.html">artus.evaluate_model package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">artus.inference package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="artus.prepare.html">artus.prepare package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="artus.spatialize.html">artus.spatialize package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="artus.train.html">artus.train package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="artus.html#module-artus">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">artus</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+          <li class="breadcrumb-item"><a href="artus.html">artus package</a></li>
+      <li class="breadcrumb-item active">artus.inference package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/artus.inference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="artus-inference-package">
+<h1>artus.inference package<a class="headerlink" href="#artus-inference-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-artus.inference.config">
+<span id="artus-inference-config-module"></span><h2>artus.inference.config module<a class="headerlink" href="#module-artus.inference.config" title="Permalink to this heading"></a></h2>
+<p>Read a config file and return a cfg to use a model with detectron2 library for the inference process.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.config.add_config">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.config.</span></span><span class="sig-name descname"><span class="pre">add_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.config.add_config" title="Permalink to this definition"></a></dt>
+<dd><p>Add config for DL model coming from a yaml config file.</p>
+<p>The config is read and a cfg suitable for detectron2 package is returned.
+This cfg uses a model already fine tuned with detectron2. The path to this
+model’sa checkpoint should be mentionned in the LOGS section of the config file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_path</strong> (<em>str</em>) – the path to a config file in yaml format</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – ‘cpu’ or ‘cuda’. Results of (Python(“cuda” if torch.cuda.is_available() else “cpu”))</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a cfg to use a detectron model’s checkpoint on unlabeled images (inference)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.config.check_logs">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.config.</span></span><span class="sig-name descname"><span class="pre">check_logs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.config.check_logs" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the config file already contains path to a log directory
+(which include a checkpoint to a model)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_path</strong> (<em>str</em>) – the path to a config file in yaml format</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>true if the config file includes path to a log directory,</dt><dd><p>false otherwise.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>check_logs (bool)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artus.inference.deploy_unlabeled_dataset">
+<span id="artus-inference-deploy-unlabeled-dataset-module"></span><h2>artus.inference.deploy_unlabeled_dataset module<a class="headerlink" href="#module-artus.inference.deploy_unlabeled_dataset" title="Permalink to this heading"></a></h2>
+<p>Create a fiftyone dataset with unlabeled or labeled images.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.deploy_unlabeled_dataset.create_or_load_dataset">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.deploy_unlabeled_dataset.</span></span><span class="sig-name descname"><span class="pre">create_or_load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['unlabeled',</span> <span class="pre">'coco']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">images_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotations_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['segmentations',</span> <span class="pre">'detections']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.deploy_unlabeled_dataset.create_or_load_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Create a fiftyone labeled or unlabeled dataset.</p>
+<p>If the dataset_name provided is in the local 51 database : the dataset is loaded from the database otherwise,
+the dataset is created</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset_name</strong> (<em>str</em>) – the name of the dataset that you want to create or load</p></li>
+<li><p><strong>dataset_type</strong> (<em>str</em>) – can be ‘unlabeled’ for images without annotations or ‘coco’ if images have coco annotations.</p></li>
+<li><p><strong>images_path</strong> (<em>str</em>) – a path to the directory containing the images (can be tif, png or jpg images)</p></li>
+<li><p><strong>annotations_path</strong> (<em>str</em><em>, </em><em>optional</em>) – a path to the COCO annotations files</p></li>
+<li><p><strong>df_test</strong> (<em>str</em><em>, </em><em>optional</em>) – a path to the COCO annotations files for test images</p></li>
+<li><p><strong>label_type</strong> – ‘segmentations’ for mask or ‘detections’ for bounding box annotations</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns :</dt><dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code> with at least 6 fields : id, coco_id, filepath, ground_truth annotations (if provided), tags and basic metadata.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artus.inference.predict">
+<span id="artus-inference-predict-module"></span><h2>artus.inference.predict module<a class="headerlink" href="#module-artus.inference.predict" title="Permalink to this heading"></a></h2>
+<p>Module to use a model checkpoint and predict annotations on unlabeled images.</p>
+<p>Annotations produced by the model (called predictions) are segmentation masks for
+instance segmentation tasks or bounding boxes for object detection tasks.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.predict.add_predictions_to_dataset">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.predict.</span></span><span class="sig-name descname"><span class="pre">add_predictions_to_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions_field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_of_preds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['segm',</span> <span class="pre">'bbox']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nms_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_thr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.predict.add_predictions_to_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Add predictions to <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code>.</p>
+<p>All the images <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code> that have the tag indicated will be selected to be predicted by an AI model.
+This function uses the GPU is available or parallelize through multiple CPU to predict on all the images of a dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> – a <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code></p></li>
+<li><p><strong>predictor</strong> – the result of <code class="xref py py-func docutils literal notranslate"><span class="pre">artus.inference.build_predictor()</span></code></p></li>
+<li><p><strong>device</strong> (<em>str</em>) – “cpu” or “cuda”. Results of <cite>“cuda” if torch.cuda.is_available() else “cpu”</cite></p></li>
+<li><p><strong>classes</strong> (<em>list</em>) – a list of the classes predicted by the model</p></li>
+<li><p><strong>predictions_field</strong> (<em>str</em>) – the name of the fiftyone field that will be added to be dataset</p></li>
+<li><p><strong>tags</strong> (<em>list</em><em> or </em><em>str</em>) – a variable or a list of variables (optional) to filter the samples on which to predict</p></li>
+<li><p><strong>type_of_preds</strong> (<em>str</em>) – indicate if semgentation masks “segm” expected or bounding boxes “bbox”</p></li>
+<li><p><strong>confidence_thr</strong> (<em>float</em>) – a threshold between 0 and 1. Predictions with lower confidence than this threshold will be filtered out
+of the <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code> containing predictions for the tagged samples.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.predict.apply_nms">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.predict.</span></span><span class="sig-name descname"><span class="pre">apply_nms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nms_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_of_preds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['segm',</span> <span class="pre">'bbox']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.predict.apply_nms" title="Permalink to this definition"></a></dt>
+<dd><p>Apply non-maximum threshold on predictions made on a sample.</p>
+<p>Non Maximum Suppression NMS is a technique to select one entity, i.e. bounding boxes or masks,
+out of many overlapping entities based on the IoU (intersection over union).The function
+applies the NMS technique for predictions of different class types, the default Detectron2
+parameter MODEL.ROI_HEADS.NMS_THRESH_TEST applies NMS only for same class types instances
+<cite>https://github.com/facebookresearch/detectron2/issues/978</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outputs</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – a list of dict in the “outputs” inference format of detectron2 lib</p></li>
+<li><p><strong>nms_threshold</strong> (<em>float</em>) – Overlap threshold used for non-maximum suppression, suppress boxes or
+masks with IoU &gt;= threshold</p></li>
+<li><p><strong>type_of_preds</strong> (<em>str</em>) – indicate if predictions are semgentation masks “segm” or bounding boxes “bbox”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the “outputs” inference format of detectron2 lib</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>res (list[dict])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.predict.build_predictor">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.predict.</span></span><span class="sig-name descname"><span class="pre">build_predictor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.predict.build_predictor" title="Permalink to this definition"></a></dt>
+<dd><p>Load a model in indeference mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_path</strong> (<em>str</em>) – the path to a config file in yaml format</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – ‘cpu’ or ‘cuda’. Results of <cite>“cuda” if torch.cuda.is_available() else “cpu”</cite></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>predictor : the model loaded to predict unlabeled images</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.predict.crop_mask">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.predict.</span></span><span class="sig-name descname"><span class="pre">crop_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bbox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.predict.crop_mask" title="Permalink to this definition"></a></dt>
+<dd><p>Crop the mask within a bounding box.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbox</strong> (<em>list</em>) – a list of the bounding box’s corners for the predicted object.</p></li>
+<li><p><strong>mask</strong> – the mask of the object predicted returned by detectron2. It is actually a mask for the whole image</p></li>
+<li><p><strong>bbox</strong><strong>)</strong> (<em>and 51 requires a mask within the</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A cropped mask corresponding to the inside of the bbox for the predicted object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.predict.filter_confidence_labels">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.predict.</span></span><span class="sig-name descname"><span class="pre">filter_confidence_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fo_field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_thr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.predict.filter_confidence_labels" title="Permalink to this definition"></a></dt>
+<dd><p>Filter labels that are smaller than the confidence threshold set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> – a <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code></p></li>
+<li><p><strong>fo_field</strong> (<em>str</em>) – a fiftyone field with model’s predictions</p></li>
+<li><p><strong>confidence_thr</strong> (<em>float</em>) – a threshold for confidence of model’s predictions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code> with labels smaller than the confidence threshold removed</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.predict.filter_small_predictions">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.predict.</span></span><span class="sig-name descname"><span class="pre">filter_small_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fo_field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.predict.filter_small_predictions" title="Permalink to this definition"></a></dt>
+<dd><p>Filter predictions covering less than 3 pixels in a dataset.</p>
+<p>Predictions that are very small, i.e. smaller than 3 pixels, may trigger
+problems when exporting the fiftyone dataset. It is best practises to remove them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> – a <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code></p></li>
+<li><p><strong>fo_field</strong> (<em>str</em>) – a fiftyone field with model’s predictions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the <code class="xref py py-class docutils literal notranslate"><span class="pre">fiftyone.core.dataset</span></code> with small predictions area removed</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.predict.predict">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.predict.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.predict.predict" title="Permalink to this definition"></a></dt>
+<dd><p>Predict masks or bounding boxes on an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predictor</strong> – a detectron2 predictor returned by <cite>build_predictor()</cite></p></li>
+<li><p><strong>filepath</strong> (<em>str</em>) – the absolute or relative path to the image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an ordered dict with the label predicted and the coordinates of the bbox or masks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="artus.inference.predict.predict_on_sample">
+<span class="sig-prename descclassname"><span class="pre">artus.inference.predict.</span></span><span class="sig-name descname"><span class="pre">predict_on_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nms_threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_of_preds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['segm',</span> <span class="pre">'bbox']</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#artus.inference.predict.predict_on_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Use a loaded AI model to predict segmentations mask or bounding boxes on an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sample_filepath</strong> (<em>str</em>) – the filepath to an image (jpg, png or tif file)</p></li>
+<li><p><strong>predictor</strong> – the result of build_predictor()</p></li>
+<li><p><strong>device</strong> (<em>str</em>) – “cpu” or “cuda”. Results of <cite>“cuda” if torch.cuda.is_available() else “cpu”</cite></p></li>
+<li><p><strong>nms_threshold</strong> (<em>float</em>) – the non-maximum-suppression threshold.</p></li>
+<li><p><strong>classes</strong> (<em>list</em>) – a list of the classes that can be predicted by the AI model.</p></li>
+<li><p><strong>type_of_preds</strong> (<em>str</em>) – indicate if semgentation masks “segm” expected or bounding boxes “bbox”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a fiftyone field :class:<code class="docutils literal notranslate"><span class="pre">fiftyone.core.detections</span></code> containing predictions for the sample</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-artus.inference">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-artus.inference" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="artus.evaluate_model.html" class="btn btn-neutral float-left" title="artus.evaluate_model package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="artus.prepare.html" class="btn btn-neutral float-right" title="artus.prepare package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, 6tronl.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
