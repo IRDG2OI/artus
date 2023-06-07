@@ -2,11 +2,8 @@
    sphinx-quickstart on Thu Jun  1 14:39:37 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
-.. image:: logo_artus.png
-   :height: 100
 
-
-A GeoAI package to produce maps thanks to deep learning
+Artus : a GeoAI package to produce maps thanks to deep learning
 =======================================================
 
 Artus is a python package to automatically produce maps thanks to deep learning models. With artus, you can train deep learning learning models (neural network)

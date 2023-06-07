@@ -29,7 +29,7 @@ This project is being developed as part of the G2OI project, cofinanced by the E
 
 ## Installation
 
-All the installation procedures are available here : [install artus](https://artus.readthedocs.io/en/latest/)
+All the installation procedures are available here : [install artus](https://artus.readthedocs.io/en/latest/installation.html)
 
 ## Tutorials
 
