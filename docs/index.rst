@@ -19,15 +19,15 @@ To handle large raster file, artus provides a way to tile raster into smaller ti
 Artus has already been implemented in three use cases using 3 differents inputs data : satellite images to detect gillnets vessels, orthomosaics to detect corals
 species and under water images marked with a georeferenced point to detect marine species.
 
-.. image:: ../figures/gillnets_X101_predictions.png
+.. image:: ../gillnets_X101_predictions.png
    :alt: Detection of gilnets vessels on satellite images
    :height: 150
 
-.. image:: ../figures/predicted_species_ngouja.png
+.. image:: ../predicted_species_ngouja.png
    :alt: Detection of coral species on under water orthomosaics
    :height: 150
 
-.. image:: ../figures/heatmap_study_area.png
+.. image:: ../heatmap_study_area.png
    :alt: Detection of dead corals on georeferenced images
    :height: 150
 
@@ -43,7 +43,7 @@ Installation
 
 This project is being developed as part of the G2OI project, cofinanced by the European union, the Reunion region, and the French Republic.
 
-.. image:: ../figures/logo_partenaires.png
+.. image:: ../logo_partenaires.png
    :alt: Financials partners of this project : European union, the Reunion region, and the French Republic
    :height: 40
 

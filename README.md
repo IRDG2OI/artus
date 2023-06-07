@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="figures/logo_artus.png" height="130px">
+<img src="logo_artus.png" height="130px">
 
 # Predict geospatial data with artificial intelligence
 
@@ -20,5 +20,21 @@ Artus has already been implemented in three use cases using 3 differents inputs 
 species and under water images marked with a georeferenced point to detect marine species.
 
 
+## Installation
+### Prerequisites
 
+To install jacques in your working environnement, you should already have installed a pytorch (and torchvision) version adapted to your machine resources. By following the link below, you can find the optimal configuration to install pytorch in your working environnement. Make sure to install the last version available.
+> https://pytorch.org/
+
+### Jacques installation
+
+Jacques can be installed by executing the following lines in your terminal:
+
+```
+git clone https://gitlab.ifremer.fr/jd326f6/jacques.git
+cd jacques
+pip install .
+```
+
+:bulb: If you are working in an environnement, don't forget to `pip install ipykernel` to make your environnement visible in your favourite IDE.
 
