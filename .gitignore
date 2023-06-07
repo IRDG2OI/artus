@@ -1,6 +1,5 @@
 artus.egg-info/
 build/
 docs/_build/
-docs/_templates/
 artus/__pycache__/
 dist/
