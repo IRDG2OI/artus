@@ -21,6 +21,7 @@ artus/prepare/tile.py
 artus/prepare/transform_geoson_to_coco.py
 artus/spatialize/GeoCOCOExporter.py
 artus/spatialize/GeoFiftyoneExporter.py
+artus/spatialize/LocationImporter.py
 artus/spatialize/__init__.py
 artus/train/__init__.py
 artus/train/build_trainer.py

@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Artus : a GeoAI package to produce maps thanks to deep learning
-=======================================================
+===============================================================
 
 Artus is a python package to automatically produce maps thanks to deep learning models. With artus, you can train deep learning learning models (neural network)
 on raster images annotated with vector files. You can then use the trained model to predict spatial occurrences on new unlabeled rasters. Predictions can be exported

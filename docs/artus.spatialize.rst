@@ -20,6 +20,14 @@ artus.spatialize.GeoFiftyoneExporter module
    :undoc-members:
    :show-inheritance:
 
+artus.spatialize.LocationImporter module
+----------------------------------------
+
+.. automodule:: artus.spatialize.LocationImporter
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 
