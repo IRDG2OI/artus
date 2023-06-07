@@ -26,6 +26,7 @@ Typical usage examples:
 import pandas as pd
 import fiftyone as fo
 import fiftyone.utils.data as foud
+from shapely import Point
 import geopandas
 import os
 from artus.spatialize.GeoCOCOExporter import GeoCOCOExporter
@@ -132,6 +133,10 @@ class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
 
     def export_sample(self, image_or_path, label, metadata=None):
         """Exports the given sample to the dataset.
+            
+        If images in the dataset are tif then it will convert use the world coordinates for the masks or bbox...
+        Otherwise, if images are simply georeferenced it will assigned every label on the image to a single GPS point
+        GPS point must have been added to the dataset using :func:`artus.spatialize.LocationImporter.import_csv_locations`
 
         Args:
             image_or_path: an image or the path to the image on disk
@@ -152,7 +157,12 @@ class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
             img_filename = sample.filepath
             label = n_label.label
             confidence = n_label.confidence
-            geometry = self.shapely_polygons(n_label, metadata)                
+            
+            if metadata.mime_type == "image/tiff":
+                geometry = self.shapely_polygons(n_label, metadata) 
+                   
+            elif metadata.mime_type == "image/tiff" and self.sample_collection.has_field('location'):
+                geometry = Point(sample.location.point)
 
             gdf_row = (img_filename , label , confidence, geometry)
 
@@ -179,7 +189,9 @@ class GeoFiftyoneExporter(foud.LabeledImageDatasetExporter, GeoCOCOExporter):
         gdf = geopandas.GeoDataFrame(df, geometry='geometry')
 
         #convert pixel-values coordinates into geospatial coordinates
-        gdf['transform'] =  [self.get_transform(sample) for sample in gdf['img_filename']]
-        affine_transformed_gdf = self.affine_transform(gdf)
-        affine_transformed_gdf = affine_transformed_gdf.filter(items=['img_filename', 'label', 'confidence', 'geometry'])
-        affine_transformed_gdf.to_file(os.path.join(self.export_dir, self.dest_name), driver='GeoJSON')
+        if gdf['geometry'].geom_type.all() != 'Point':
+            gdf['transform'] =  [self.get_transform(sample) for sample in gdf['img_filename']]
+            gdf = self.affine_transform(gdf)        
+
+        gdf = gdf.filter(items=['img_filename', 'label', 'confidence', 'geometry'])
+        gdf.to_file(os.path.join(self.export_dir, self.dest_name), driver='GeoJSON')
