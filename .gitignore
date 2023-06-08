@@ -3,3 +3,4 @@ build/
 docs/_build/
 artus/__pycache__/
 dist/
+artus.egg-info/
