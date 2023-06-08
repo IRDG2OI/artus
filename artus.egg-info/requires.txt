@@ -3,6 +3,7 @@ solaris@ git+https://github.com/CosmiQ/solaris@0.5.0
 torch>=1.12.1
 torchmetrics>=0.9.3
 torchvision>=0.13.1
+geopandas>=0.13.0
 Fiona==1.8.22
 importlib-metadata==6.1.0
 importlib-resources==5.7.1
