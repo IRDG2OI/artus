@@ -130,7 +130,7 @@ class ModelsMetricsPlots():
 
         fig = px.bar(metrics, x="model", y="Average precision", color="model", barmode="relative",
              facet_col="variable", facet_col_wrap=5, facet_row_spacing=0.04, facet_col_spacing=0.04,
-             height=2000, width = 1500, title= self.title)
+             height=1500, width = 1500, title= self.title)
         
         fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
