@@ -38,7 +38,7 @@ Tutorials to learn
 If you wan to use Artus and you don't know where to start, notebooks have been prepared for you! Have a look to this repo : `tutorials <https://github.com/6tronl/artus-examples>`_.
 
 .. toctree::
-   :caption: :mortar_board: Tutorials
+   :caption: Tutorials
 
    rasters_images.ipynb
 
