@@ -1,3 +1,4 @@
+LICENSE
 README.md
 pyproject.toml
 artus/__init__.py
@@ -18,7 +19,7 @@ artus/prepare/__init__.py
 artus/prepare/coco_splitting.py
 artus/prepare/crs_settings.py
 artus/prepare/tile.py
-artus/prepare/transform_geoson_to_coco.py
+artus/prepare/transform_geojson_to_coco.py
 artus/spatialize/GeoCOCOExporter.py
 artus/spatialize/GeoFiftyoneExporter.py
 artus/spatialize/LocationImporter.py

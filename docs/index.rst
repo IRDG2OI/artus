@@ -33,6 +33,15 @@ into smaller splits with artus and predict corals occurrences thanks to a traine
    installation
 
 
+Tutorials to learn
+------------------
+If you wan to use Artus and you don't know where to start, notebooks have been prepared for you! Have a look to this repo : `tutorials <https://github.com/6tronl/artus-examples>`_.
+
+.. toctree::
+   :caption: :mortar_board: Tutorials
+
+   rasters_images.ipynb
+
 How to cite
 -----------
 

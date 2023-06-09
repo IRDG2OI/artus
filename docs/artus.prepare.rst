@@ -28,10 +28,10 @@ artus.prepare.tile module
    :undoc-members:
    :show-inheritance:
 
-artus.prepare.transform\_geoson\_to\_coco module
-------------------------------------------------
+artus.prepare.transform\_geojson\_to\_coco module
+-------------------------------------------------
 
-.. automodule:: artus.prepare.transform_geoson_to_coco
+.. automodule:: artus.prepare.transform_geojson_to_coco
    :members:
    :undoc-members:
    :show-inheritance:
