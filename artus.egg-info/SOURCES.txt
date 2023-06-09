@@ -5,6 +5,7 @@ artus/__init__.py
 artus.egg-info/PKG-INFO
 artus.egg-info/SOURCES.txt
 artus.egg-info/dependency_links.txt
+artus.egg-info/requires.txt
 artus.egg-info/top_level.txt
 artus/evaluate_model/__init__.py
 artus/evaluate_model/coco_stats.py

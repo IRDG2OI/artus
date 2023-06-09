@@ -41,6 +41,7 @@ If you wan to use Artus and you don't know where to start, notebooks have been p
    :caption: Tutorials
 
    rasters_images.ipynb
+   images_with_GPS_point.ipynb
 
 How to cite
 -----------
