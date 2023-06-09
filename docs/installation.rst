@@ -22,6 +22,10 @@ In your working environment you can install artus::
 To make the most of artus, you can need to install `Detectron2 <https://detectron2.readthedocs.io/en/latest/tutorials/install.html>`_ and `solaris <https://solaris.readthedocs.io/en/latest/>`_::
     
     python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
+    git clone https://github.com/cosmiq/solaris.git
+    cd solaris
+    git checkout 0.5.0
+    pip install .
 
 
 3. Try artus!
