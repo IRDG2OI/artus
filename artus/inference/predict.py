@@ -9,7 +9,6 @@ from detectron2.structures import Boxes, Instances
 from torchvision.transforms import functional as func
 import numpy as np
 import cv2
-from PIL import Image
 import fiftyone as fo
 import fiftyone.utils.labels as foul
 from fiftyone import ViewField as F
@@ -111,9 +110,9 @@ def predict_on_sample(sample_filepath, device, predictor, nms_threshold, classes
     Returns:
         a fiftyone field :class:``fiftyone.core.detections`` containing predictions for the sample
     """
-    image = Image.open(sample_filepath)
-    image = func.to_tensor(image).to(device)
-    c, h, w = image.shape
+    
+    image = cv2.imread(sample_filepath)
+    h, w, c = image.shape
 
     preds = predict(predictor, sample_filepath)
 
