@@ -19,7 +19,6 @@ import fiftyone as fo
 from artus.inference.config import add_config
 from joblib import Parallel, delayed
 import multiprocessing
-multiprocessing.set_start_method('spawn')
 os.environ["OPENCV_IO_MAX_IMAGE_PIXELS"]=pow(2,50).__str__()
 
 def build_predictor(config_path, device):
@@ -115,46 +114,47 @@ def predict_on_sample(sample_filepath, device, predictor, nms_threshold, classes
     h, w, c = image.shape
 
     preds = predict(predictor, sample_filepath)
-
     preds = apply_nms(preds, nms_threshold, type_of_preds)
     
-    labels = preds['instances'].pred_classes.cpu().detach().numpy()
-    scores = preds['instances'].scores.cpu().detach().numpy()
-    boxes = preds['instances'].pred_boxes
-    if type_of_preds=='segm':
-        masks = preds['instances'].pred_masks.cpu().detach().numpy()
-
     detections = []
-    if type_of_preds=='segm':
+    if preds:
+        labels = preds['instances'].pred_classes.cpu().detach().numpy()
+        scores = preds['instances'].scores.cpu().detach().numpy()
+        boxes = preds['instances'].pred_boxes
+        if type_of_preds=='segm':
+            masks = preds['instances'].pred_masks.cpu().detach().numpy()
 
-        for label, score, box, mask in zip(labels, scores, boxes, masks):
-            # Convert to [top-left-x, top-left-y, width, height]
-            # in relative coordinates in [0, 1] x [0, 1]
+
+        if type_of_preds=='segm':
+
+            for label, score, box, mask in zip(labels, scores, boxes, masks):
+                # Convert to [top-left-x, top-left-y, width, height]
+                # in relative coordinates in [0, 1] x [0, 1]
+                    x1, y1, x2, y2 = box
+                    rel_box = [x1 / w, y1 / h, (x2 - x1) / w, (y2 - y1) / h]
+
+                    mask = crop_mask(box, mask)
+
+                    detections.append(
+                        fo.Detection(
+                            label=classes[label],
+                            bounding_box=rel_box,
+                            confidence=score, 
+                            mask=mask
+                        )
+                    )
+        else:
+            for label, score, box in zip(labels, scores, boxes):
                 x1, y1, x2, y2 = box
                 rel_box = [x1 / w, y1 / h, (x2 - x1) / w, (y2 - y1) / h]
 
-                mask = crop_mask(box, mask)
-
                 detections.append(
                     fo.Detection(
-                        label=classes[label],
-                        bounding_box=rel_box,
-                        confidence=score, 
-                        mask=mask
-                    )
-                )
-    else:
-        for label, score, box in zip(labels, scores, boxes):
-            x1, y1, x2, y2 = box
-            rel_box = [x1 / w, y1 / h, (x2 - x1) / w, (y2 - y1) / h]
-                    
-            detections.append(
-                fo.Detection(
-                label=classes[label],
-                bounding_box=rel_box,
-                confidence=score)
-                )   
-            
+                    label=classes[label],
+                    bounding_box=rel_box,
+                    confidence=score)
+                    )   
+        
     return fo.Detections(detections=detections)
 
 
