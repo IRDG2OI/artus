@@ -1,3 +1,3 @@
 nbsphinx
 sphinx_copybutton
-git+https://github.com/cosmiq/solaris/tree/0.5.0
+git+https://github.com/cosmiq/solaris@0.5.0
