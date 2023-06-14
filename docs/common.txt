@@ -1,4 +1,0 @@
-nbsphinx
-sphinx_copybutton
-rtree
-torch
