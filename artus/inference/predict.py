@@ -258,5 +258,6 @@ def apply_nms(outputs, nms_threshold, type_of_preds=['segm', 'bbox']) :
         res.pred_masks = pred_masks[keep_idx]
     res = {"instances": res}
 
-    
+    return res
+
     
