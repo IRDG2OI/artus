@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: artus
-Version: 0.2.3
+Version: 0.3.0
 Summary: A geoAI package to train and predict spatial occurences on rasters or georeferenced images.
 Author-email: Justine Talpaert Daudon <justine.daudon@protonmail.com>
 Project-URL: Homepage, https://github.com/6tronl/artus

@@ -21,7 +21,7 @@ copyright = '2023, Justine Talpaert Daudon'
 author = 'Justine Talpaert Daudon'
 
 # The full version, including alpha/beta/rc tags
-release = '0.3.0'
+release = '0.3.1'
 
 
 # -- General configuration ---------------------------------------------------

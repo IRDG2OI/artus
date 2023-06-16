@@ -197,7 +197,7 @@ def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_
 
     if type_of_preds=='segm':
         test_set.set_values("predictions_with_bbox", detections)
-        
+
         #Transform bbox and mask in polylines
         foul.instances_to_polylines(
             test_set,
@@ -206,11 +206,10 @@ def add_predictions_to_dataset(dataset, predictor, device, classes, predictions_
             )
         
         test_set.delete_sample_field('predictions_with_bbox')
+        test_set = filter_small_predictions(test_set, predictions_field)
 
     else: 
         test_set.set_values(predictions_field, detections)
-
-    test_set = filter_small_predictions(test_set, predictions_field)
     
     if confidence_thr>0:
         test_set = filter_confidence_labels(test_set, predictions_field, confidence_thr)
