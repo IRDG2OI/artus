@@ -2,6 +2,16 @@
 
 <img src="https://github.com/6tronl/artus/blob/main/docs/logo_artus.png?raw=True" height="130px">
 
+# ACKNOWLEDGEMENT
+
+This project is being developed as part of the G2OI project, cofinanced by the European Union, the Reunion region, and the French Republic.
+<div align="center">
+
+
+<img src="https://github.com/IRDG2OI/geoflow-g2oi/blob/main/img/logos_partenaires.png?raw=True" height="80px">
+
+</div>
+
 # Predict geospatial data with artificial intelligence
 
 [![Documentation Status](https://readthedocs.org/projects/artus/badge/?version=latest)](https://artus.readthedocs.io/en/latest/?badge=latest)
